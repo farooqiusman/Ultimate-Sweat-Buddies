@@ -18,8 +18,13 @@ public class PlansFragment extends Fragment {
 
     private PlansViewModel mViewModel;
 
+    public static PlansFragment instance;
     public static PlansFragment newInstance() {
         return new PlansFragment();
+    }
+    public static PlansFragment getInstance() {
+        if (instance == null) instance = newInstance();
+        return instance;
     }
 
     @Override

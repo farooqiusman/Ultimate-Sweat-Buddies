@@ -63,22 +63,22 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment;
         switch (fragmentId) {
             case R.id.navWorkout:
-                fragment = new WorkoutFragment();
+                fragment = WorkoutFragment.getInstance();
                 break;
             case R.id.navPlans:
-                fragment = new PlansFragment();
+                fragment = PlansFragment.getInstance();
                 break;
             case R.id.navExercises:
-                fragment = new ExercisesFragment();
+                fragment = ExercisesFragment.getInstance();
                 break;
             case R.id.navGoals:
-                fragment = new GoalsFragment();
+                fragment = GoalsFragment.getInstance();
                 break;
             case R.id.navHistory:
-                fragment = new HistoryFragment();
+                fragment = HistoryFragment.getInstance();
                 break;
             case R.id.navProfile:
-                fragment = new ProfileFragment();
+                fragment = ProfileFragment.getInstance();
                 break;
             default:
                 Log.e("navigation_error", "Tried to navigate to unknown fragment");
