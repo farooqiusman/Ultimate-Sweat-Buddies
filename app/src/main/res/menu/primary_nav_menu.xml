@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navWorkout"
+        android:icon="@drawable/dumbell"
+        android:title="@string/workout"
+        android:menuCategory="secondary"
+        android:targetClass="com.example.ultimate_sweat_buddies.WorkoutActivity"
+        android:targetPackage="com.example.ultimate_sweat_buddies" />
+
+    <item
+        android:id="@+id/navPlans"
+        android:icon="@drawable/plan"
+        android:title="@string/plans"
+        android:menuCategory="secondary"
+        android:targetClass="com.example.ultimate_sweat_buddies.PlansActivity"
+        android:targetPackage="com.example.ultimate_sweat_buddies" />
+    <item
+        android:id="@+id/navExercises"
+        android:icon="@drawable/exercise"
+        android:title="@string/exercises"
+        android:menuCategory="secondary"
+        android:targetClass="com.example.ultimate_sweat_buddies.ExerciseActivity"
+        android:targetPackage="com.example.ultimate_sweat_buddies" />
+    <item
+        android:id="@+id/navGoals"
+        android:icon="@drawable/goal"
+        android:title="@string/goals"
+        android:menuCategory="secondary"
+        android:targetClass="com.example.ultimate_sweat_buddies.GoalsActivity"
+        android:targetPackage="com.example.ultimate_sweat_buddies" />
+    <item
+        android:id="@+id/navHistory"
+        android:icon="@drawable/history"
+        android:title="@string/history"
+        android:menuCategory="secondary"
+        android:targetClass="com.example.ultimate_sweat_buddies.HistoryActivity"
+        android:targetPackage="com.example.ultimate_sweat_buddies" />
+</menu>
