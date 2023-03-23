@@ -18,8 +18,13 @@ public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
 
+    public static ProfileFragment instance;
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
+    }
+    public static ProfileFragment getInstance() {
+        if (instance == null) instance = newInstance();
+        return instance;
     }
 
     @Override

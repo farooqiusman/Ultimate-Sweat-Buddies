@@ -18,8 +18,13 @@ public class GoalsFragment extends Fragment {
 
     private GoalsViewModel mViewModel;
 
+    public static GoalsFragment instance;
     public static GoalsFragment newInstance() {
         return new GoalsFragment();
+    }
+    public static GoalsFragment getInstance() {
+        if (instance == null) instance = newInstance();
+        return instance;
     }
 
     @Override

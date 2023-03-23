@@ -18,8 +18,13 @@ public class HistoryFragment extends Fragment {
 
     private HistoryViewModel mViewModel;
 
+    public static HistoryFragment instance;
     public static HistoryFragment newInstance() {
         return new HistoryFragment();
+    }
+    public static HistoryFragment getInstance() {
+        if (instance == null) instance = newInstance();
+        return instance;
     }
 
     @Override

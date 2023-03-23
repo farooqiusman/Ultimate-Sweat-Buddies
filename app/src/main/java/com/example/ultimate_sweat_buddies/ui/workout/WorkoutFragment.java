@@ -18,8 +18,13 @@ public class WorkoutFragment extends Fragment {
 
     private WorkoutViewModel mViewModel;
 
+    public static WorkoutFragment instance;
     public static WorkoutFragment newInstance() {
         return new WorkoutFragment();
+    }
+    public static WorkoutFragment getInstance() {
+        if (instance == null) instance = newInstance();
+        return instance;
     }
 
     @Override
