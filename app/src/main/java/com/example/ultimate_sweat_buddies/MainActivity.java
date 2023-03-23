@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ActivityLoginBinding binds to activity_login.xml, and we can access the elements by their
+        // ActivityMainBinding binds to activity_login.xml, and we can access the elements by their
         // id's using binding.<id>
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Both the bottom navbar and the navigation options from the app bar use this function
     @SuppressLint("NonConstantResourceId")
     private boolean switchFragment(int fragmentId) {
         // Get the fragment for the clicked on navigation item
