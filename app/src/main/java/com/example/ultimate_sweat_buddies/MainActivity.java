@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         // (Note: NavigationBarView is abstract, and BottomNavigationView extends it)
         final NavigationBarView bnvPrimaryNav = binding.bnvPrimaryNav;
         bnvPrimaryNav.setOnItemSelectedListener(item -> switchFragment(item.getItemId()));
+
+        // Show the workout fragment on startup
+        switchFragment(R.id.navWorkout);
     }
 
     // Creates the secondary menu in the app bar
