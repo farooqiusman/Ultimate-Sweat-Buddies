@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Ultimate-Sweat-Buddies</string>
+    <string name="workout">Workout</string>
+    <string name="plans">Plans</string>
+    <string name="exercises">Exercises</string>
+    <string name="goals">Goals</string>
+    <string name="history">History</string>
+    <string name="profile">Profile</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
