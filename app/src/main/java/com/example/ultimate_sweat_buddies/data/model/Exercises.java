@@ -19,7 +19,6 @@ public class Exercises {
         this.exerciseType = exerciseType;
         this.enduranceExercises = enduranceExercises;
         this.weightExercises = weightExercises;
-
     }
 
     public String getUserEmail() {

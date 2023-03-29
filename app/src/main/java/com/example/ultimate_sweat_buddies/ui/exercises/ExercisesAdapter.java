@@ -10,16 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ultimate_sweat_buddies.R;
-import com.example.ultimate_sweat_buddies.data.model.Exercises;
+import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
+import com.example.ultimate_sweat_buddies.data.model.Exercise;
+import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 
 import java.util.List;
 
 public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExercisesViewHolder> {
 
-    List<Exercises> exercises;
+    List<Exercise> exercises;
     private Context mContext;
 
-    public ExercisesAdapter(List<Exercises> exercises, Context mContext) {
+    public ExercisesAdapter(List<Exercise> exercises, Context mContext) {
         this.exercises = exercises;
         this.mContext = mContext;
     }
@@ -27,16 +29,23 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
     @NonNull
     @Override
     public ExercisesAdapter.ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_exercises, parent, false);
-        ExercisesViewHolder exercisesViewHolder = new ExercisesViewHolder(view);
-        return exercisesViewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_item_layout, parent, false);
+        return new ExercisesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExercisesAdapter.ExercisesViewHolder holder, int position) {
-        Exercises item = exercises.get(position);
-        holder.exerciseTypeTextView.setText(item.getExerciseType());
-        holder.exerDesc.setText(item.getWorkoutPlanTitle());
+        Exercise item = exercises.get(position);
+        holder.tvName.setText(item.getName());
+        if (item instanceof WeightExercise) {
+            WeightExercise exercise = (WeightExercise) item;
+            String desc = String.format("Sets: %d, Reps: %d, Weight: %d", exercise.getSets(), exercise.getReps(), exercise.getWeight());
+            holder.tvDesc.setText(desc);
+        } else if (item instanceof EnduranceExercise) {
+            EnduranceExercise exercise = (EnduranceExercise) item;
+            String desc = String.format("Time: %s", exercise.getTime());
+            holder.tvDesc.setText(desc);
+        }
     }
 
     @Override
@@ -45,17 +54,14 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
     }
 
     public class ExercisesViewHolder extends RecyclerView.ViewHolder {
-        private TextView exerciseTypeTextView;
-        private TextView exerDesc;
+
+        private TextView tvName;
+        private TextView tvDesc;
 
         public ExercisesViewHolder(@NonNull View itemView) {
             super(itemView);
-            exerciseTypeTextView = itemView.findViewById(R.id.exerciseTypeTextView);
-            exerDesc = itemView.findViewById(R.id.exerciseDescriptionTextView);
-        }
-
-        public void bind(String exercise) {
-            exerciseTypeTextView.setText(exercise);
+            tvName = itemView.findViewById(R.id.tvName);
+            tvDesc = itemView.findViewById(R.id.tvDesc);
         }
     }
 }

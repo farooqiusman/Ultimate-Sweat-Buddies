@@ -19,4 +19,5 @@
     <string name="invalid_username">Username must be >3 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_signup">Signup</string>
+    <string name="delete">Delete</string>
 </resources>
