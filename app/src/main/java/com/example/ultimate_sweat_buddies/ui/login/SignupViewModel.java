@@ -3,6 +3,7 @@ package com.example.ultimate_sweat_buddies.ui.login;
 import android.util.Log;
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ultimate_sweat_buddies.api.APIInterface;
@@ -68,17 +69,13 @@ public class SignupViewModel extends ViewModel {
     }
 
     public void apiCall(){
-        GetUserEmail user_email = new GetUserEmail(userEmail);
-        apiInterface.getUserEmail(user_email).enqueue(new Callback<GetUserEmail>() {
+        apiInterface.getUserEmail(userEmail).enqueue(new Callback<GetUserEmail>() {
             @Override
             public void onResponse(Call<GetUserEmail> call, Response<GetUserEmail> response) {
-                assert response.body() != null;
-                Log.d("response", String.valueOf(response.body().getResponse()));
+                System.out.println(response.code());
             }
-
             @Override
             public void onFailure(Call<GetUserEmail> call, Throwable t) {
-                Log.d("response", "Response Failed with: " + t.toString());
             }
         });
     }
