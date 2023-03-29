@@ -1,22 +1,32 @@
 package com.example.ultimate_sweat_buddies.ui.exercises;
 
-import androidx.lifecycle.ViewModelProvider;
 
+
+
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ultimate_sweat_buddies.AddExercisesActivity;
 import com.example.ultimate_sweat_buddies.R;
+import com.example.ultimate_sweat_buddies.data.model.Exercises;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+
+import java.util.List;
 
 public class ExercisesFragment extends Fragment {
 
-    private ExercisesViewModel mViewModel;
+
+    private final ExercisesViewModel mViewModel = new ExercisesViewModel();
+
 
     public static ExercisesFragment instance;
     public static ExercisesFragment newInstance() {
@@ -30,14 +40,39 @@ public class ExercisesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_exercises, container, false);
+
+
+        View view = inflater.inflate(R.layout.fragment_exercises, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.Recycler_view);
+
+        List<Exercises> data = mViewModel.getData();
+
+        ExercisesAdapter adapter = new ExercisesAdapter(data, getContext());
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        FloatingActionButton fab = view.findViewById(R.id.add_btn);
+        Intent intent = new Intent(getActivity(), AddExercisesActivity.class);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
+
+        return view;
+
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ExercisesViewModel.class);
-        // TODO: Use the ViewModel
+    public void onDestroyView() {
+        super.onDestroyView();
     }
+
+
+
+
+
 
 }
