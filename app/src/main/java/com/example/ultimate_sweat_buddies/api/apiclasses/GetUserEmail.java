@@ -3,12 +3,7 @@ package com.example.ultimate_sweat_buddies.api.apiclasses;
 public class GetUserEmail {
     private String Status;
 
-    private String userEmail;
     private float Response;
-
-    public GetUserEmail(String userEmail){
-        this.userEmail = userEmail;
-    }
 
     // Getter Methods
 
