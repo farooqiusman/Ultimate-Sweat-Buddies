@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.databinding.ActivitySignupBinding;
 
@@ -76,7 +78,9 @@ public class Signup extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Welcome " + signupViewModel.getUserName() + "!",
                                 Toast.LENGTH_SHORT).show();
-                        signupViewModel.apiCall();
+                        Intent application = new Intent(Signup.this, MainActivity.class);
+                        startActivity(application);
+//                        signupViewModel.apiCall();
                 }
             }
         });
