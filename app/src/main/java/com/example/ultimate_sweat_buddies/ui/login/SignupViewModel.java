@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.ultimate_sweat_buddies.api.APIInterface;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
-import com.example.ultimate_sweat_buddies.api.apiclasses.GetUserEmail;
 import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
 
 import java.io.IOException;

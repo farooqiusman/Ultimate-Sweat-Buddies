@@ -1,7 +1,6 @@
 package com.example.ultimate_sweat_buddies.api;
 
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
-import com.example.ultimate_sweat_buddies.api.apiclasses.GetUserEmail;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 import java.util.List;
@@ -20,7 +19,7 @@ public interface APIInterface {
     Call<GetStatus> getApiStatus();
 
     @GET("/user-email")
-    Call<GetUserEmail> getUserEmail(@Query("user_email") String email);
+    Call<GetStatus> getUserEmail(@Query("user_email") String email);
 
     // Exercises
     @GET("/weight-exercises/{user_email}")
