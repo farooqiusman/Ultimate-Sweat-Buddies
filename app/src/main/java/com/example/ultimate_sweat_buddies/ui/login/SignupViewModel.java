@@ -1,7 +1,10 @@
 package com.example.ultimate_sweat_buddies.ui.login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.util.Patterns;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -11,18 +14,25 @@ import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetUserEmail;
 
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignupViewModel extends ViewModel {
     private String userName, userEmail, userPassword;
+    private boolean emailExits;
+
     private APIInterface apiInterface;
 
     public SignupViewModel(){
         this.userName = null;
         this.userEmail = null;
         this.userPassword = null;
+        this.emailExits = false;
         apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
 
@@ -32,17 +42,23 @@ public class SignupViewModel extends ViewModel {
         userEmail = useremail;
     }
 
-    public String CheckInputs(){
+    public boolean CheckInputs(Context context){
         if(!isUsernameValid(userName)){
-            return "username";
+            Toast.makeText(context,
+                    "Invalid username!", Toast.LENGTH_SHORT).show();
+            return false;
         }
         if(!isUserEmailValid(userEmail)){
-            return "email";
+            Toast.makeText(context,
+                    "Invalid Email!", Toast.LENGTH_SHORT).show();
+            return false;
         }
         if(!isPasswordValid(userPassword)){
-            return "password";
+            Toast.makeText(context,
+                    "Invalid Password!", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return "pass";
+        return true;
     }
 
     private boolean isUserEmailValid(String userEmail) {
@@ -68,15 +84,12 @@ public class SignupViewModel extends ViewModel {
         return userName;
     }
 
-    public void apiCall(){
-        apiInterface.getUserEmail(userEmail).enqueue(new Callback<GetUserEmail>() {
-            @Override
-            public void onResponse(Call<GetUserEmail> call, Response<GetUserEmail> response) {
-                System.out.println(response.code());
-            }
-            @Override
-            public void onFailure(Call<GetUserEmail> call, Throwable t) {
-            }
-        });
+    public String getUserEmail() {
+        return userEmail;
     }
+
+    public APIInterface getApiInterface() {
+        return apiInterface;
+    }
+
 }
