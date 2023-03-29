@@ -61,7 +61,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         public ExercisesViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
-            tvDesc = itemView.findViewById(R.id.tvDesc);
+            tvDesc = itemView.findViewById(R.id.tvDaysOfWeek);
         }
     }
 }
