@@ -7,12 +7,15 @@ import android.util.Patterns;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ultimate_sweat_buddies.api.APIInterface;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetUserEmail;
+import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
 
 import java.io.IOException;
 
@@ -24,16 +27,17 @@ import retrofit2.Response;
 
 public class SignupViewModel extends ViewModel {
     private String userName, userEmail, userPassword;
-    private boolean emailExits;
-
     private APIInterface apiInterface;
+    private MutableLiveData<GetStatus> myresponse = new MutableLiveData<>();
+    private MutableLiveData<NewUser> newUserResponse = new MutableLiveData<>();
+
+    private NewUser newUser;
 
     public SignupViewModel(){
         this.userName = null;
         this.userEmail = null;
         this.userPassword = null;
-        this.emailExits = false;
-        apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
+        this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
 
     public void signupDataChanged(String username, String useremail, String userpassword){
@@ -80,16 +84,43 @@ public class SignupViewModel extends ViewModel {
         return userName != null && userName.trim().length() > 3;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public String getUserEmail() {
         return userEmail;
     }
 
-    public APIInterface getApiInterface() {
-        return apiInterface;
+    public LiveData<GetStatus> getStatusLiveData(){
+        return myresponse;
     }
 
+    public LiveData<NewUser> getNewUserLiveData(){
+        return newUserResponse;
+    }
+
+    public void makeApiCall(){
+        apiInterface.getUserEmail(userEmail).enqueue(new Callback<GetStatus>() {
+            @Override
+            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                myresponse.setValue(response.body());
+            }
+            @Override
+            public void onFailure(Call<GetStatus> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void postNewUser(){
+        newUser = new NewUser(userEmail, userPassword, userName);
+        apiInterface.newUser(newUser).enqueue(new Callback<NewUser>() {
+            @Override
+            public void onResponse(Call<NewUser> call, Response<NewUser> response) {
+                newUserResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<NewUser> call, Throwable t) {
+
+            }
+        });
+    }
 }
