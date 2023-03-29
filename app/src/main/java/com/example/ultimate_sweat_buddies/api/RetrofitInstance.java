@@ -11,10 +11,10 @@ public class RetrofitInstance {
 
 
     public static Retrofit getRetrofit() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Authentication("mobiledev", "mobiledev123*"))
-                .build();
         if(retrofit == null){
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(new Authentication("mobiledev", "mobiledev123*"))
+                    .build();
             retrofit = new Retrofit.Builder().
                     baseUrl(BASEURL).
                     addConverterFactory(GsonConverterFactory.create()).
