@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
+import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 import com.example.ultimate_sweat_buddies.databinding.ActivitySigninBinding;
 import com.example.ultimate_sweat_buddies.databinding.ActivitySignupBinding;
 
@@ -71,6 +72,9 @@ public class Signin extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Welcome: " + username + "! ",
                             Toast.LENGTH_SHORT).show();
+                    StoreLoginUser.user.setUserName(username);
+                    StoreLoginUser.user.setUserEmail(signinViewModel.getUserEmail());
+
                     Intent goToApp = new Intent(Signin.this, MainActivity.class);
                     startActivity(goToApp);
                 }else{
