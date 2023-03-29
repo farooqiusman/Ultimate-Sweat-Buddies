@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,12 @@ import android.widget.Toast;
 
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
+import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.databinding.ActivitySignupBinding;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Signup extends AppCompatActivity {
 
@@ -60,27 +66,32 @@ public class Signup extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (signupViewModel.CheckInputs()){
-                    case "username":
-                        Toast.makeText(getApplicationContext(),
-                                "Invalid username!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "email":
-                        Toast.makeText(getApplicationContext(),
-                                "Invalid email!", Toast.LENGTH_SHORT).show();
-                        break;
+                if (signupViewModel.CheckInputs(getApplicationContext())) {
+                    signupViewModel.getApiInterface().getUserEmail(
+                            signupViewModel.getUserEmail()).enqueue(new Callback<GetStatus>() {
+                        @Override
+                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                           if(response.isSuccessful()) {
+                               if(Integer.parseInt(response.body().getResponse()) >= 1){
+                                   Toast.makeText(getApplicationContext(),
+                                           "Error " + signupViewModel.getUserEmail()
+                                   + " exits!", Toast.LENGTH_SHORT).show();
+                                   Intent backToMain = new Intent(Signup.this, LoginActivity.class);
+                                   startActivity(backToMain);
+                               }else{
+                                   Toast.makeText(getApplicationContext(),
+                                           "Welcome " + signupViewModel.getUserName()
+                                   + "!", Toast.LENGTH_SHORT).show();
+                                   Intent mainApp = new Intent(Signup.this, MainActivity.class);
+                                   startActivity(mainApp);
+                               }
+                           }
+                        }
+                        @Override
+                        public void onFailure(Call<GetStatus> call, Throwable t) {
 
-                    case "password":
-                        Toast.makeText(getApplicationContext(),
-                                "Invalid password!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "pass":
-                        Toast.makeText(getApplicationContext(),
-                                "Welcome " + signupViewModel.getUserName() + "!",
-                                Toast.LENGTH_SHORT).show();
-                        Intent application = new Intent(Signup.this, MainActivity.class);
-                        startActivity(application);
-//                        signupViewModel.apiCall();
+                        }
+                    });
                 }
             }
         });
