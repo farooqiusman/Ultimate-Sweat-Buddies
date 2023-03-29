@@ -73,6 +73,10 @@ public class Signin extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     Intent goToApp = new Intent(Signin.this, MainActivity.class);
                     startActivity(goToApp);
+                }else{
+                    Toast.makeText(getApplicationContext(),
+                            "Invalid username or password!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
