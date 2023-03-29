@@ -1,22 +1,45 @@
 package com.example.ultimate_sweat_buddies.ui.plans;
 
-import androidx.lifecycle.ViewModelProvider;
 
+
+
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ultimate_sweat_buddies.R;
+import com.example.ultimate_sweat_buddies.api.APIInterface;
+import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
+import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
+import com.example.ultimate_sweat_buddies.data.model.Exercise;
+import com.example.ultimate_sweat_buddies.data.model.Exercises;
+import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
+import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PlansFragment extends Fragment {
 
-    private PlansViewModel mViewModel;
+
+    private final PlansViewModel mViewModel = new PlansViewModel();
+
 
     public static PlansFragment instance;
     public static PlansFragment newInstance() {
@@ -30,14 +53,37 @@ public class PlansFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_plans, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_exercises, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.Recycler_view);
+
+        List<WorkoutPlan> data = null;
+        try {
+            data = mViewModel.getData().get();  // Waits for the future to return its result
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        PlansAdapter adapter = new PlansAdapter(data, getContext());
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        FloatingActionButton fab = view.findViewById(R.id.add_btn);
+        Intent intent = new Intent(getActivity(), AddEditPlanActivity.class);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
+
+        return view;
+
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PlansViewModel.class);
-        // TODO: Use the ViewModel
+    public void onDestroyView() {
+        super.onDestroyView();
     }
-
 }
