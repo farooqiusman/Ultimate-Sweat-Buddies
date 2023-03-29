@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ultimate_sweat_buddies.AddExercisesActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.data.model.Exercises;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

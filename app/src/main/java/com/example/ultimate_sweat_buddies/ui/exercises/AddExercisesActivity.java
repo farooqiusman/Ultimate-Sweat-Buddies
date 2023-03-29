@@ -1,4 +1,4 @@
-package com.example.ultimate_sweat_buddies;
+package com.example.ultimate_sweat_buddies.ui.exercises;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,7 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.ultimate_sweat_buddies.R;
 
 public class AddExercisesActivity extends AppCompatActivity {
 
