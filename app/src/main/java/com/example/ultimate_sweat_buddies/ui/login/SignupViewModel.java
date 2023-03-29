@@ -16,10 +16,7 @@ import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
 import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
 
-import java.io.IOException;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

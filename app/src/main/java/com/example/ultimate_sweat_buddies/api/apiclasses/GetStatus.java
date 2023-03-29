@@ -1,27 +1,32 @@
 package com.example.ultimate_sweat_buddies.api.apiclasses;
+
+import com.google.gson.annotations.SerializedName;
+
 public class GetStatus {
-    private String Status;
-    private String Response;
+    @SerializedName("Status")
+    private String status;
+    @SerializedName("Response")
+    private String response;
 
 
     // Getter Methods
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public String getResponse() {
-        return Response;
+        return response;
     }
 
     // Setter Methods
 
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public void setResponse(String Response) {
-        this.Response = Response;
+    public void setResponse(String response) {
+        this.response = response;
     }
 }
 

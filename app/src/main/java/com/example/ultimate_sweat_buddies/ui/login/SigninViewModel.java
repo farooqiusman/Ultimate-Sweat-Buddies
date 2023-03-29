@@ -29,17 +29,19 @@ public class SigninViewModel extends ViewModel {
     }
 
     public void checkAuth(){
-        apiInterface.checkUsrAuth(this.userEmail, this.userPassword).enqueue(new Callback<GetStatus>() {
-            @Override
-            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                mutableLiveData.setValue(response.body());
-            }
+        if(userEmail != null && userPassword != null){
+            apiInterface.checkUsrAuth(this.userEmail, this.userPassword).enqueue(new Callback<GetStatus>() {
+                @Override
+                public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                    mutableLiveData.setValue(response.body());
+                }
 
-            @Override
-            public void onFailure(Call<GetStatus> call, Throwable t) {
+                @Override
+                public void onFailure(Call<GetStatus> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
     }
     public LiveData<GetStatus> getStatusLiveData(){
         return mutableLiveData;
