@@ -2,28 +2,20 @@ package com.example.ultimate_sweat_buddies.data.model;
 
 import java.util.Date;
 
-public class EnduranceExercise {
-    private int id;
-    private String exerciseName;
-    private String userEmail;
+public class EnduranceExercise extends Exercise {
 
+    private String time;
 
-    public EnduranceExercise(int id, String exerciseName, String userEmail) {
-        this.id = id;
-        this.exerciseName = exerciseName;
-        this.userEmail = userEmail;
+    public EnduranceExercise(int id, String name, String userEmail, String time) {
+        super(id, name, userEmail);
+        this.time = time;
     }
 
-    public int getId() {
-        return id;
+    public String getTime() {
+        return time;
     }
 
-    public String getExerciseName() {
-        return exerciseName;
+    public void setTime(String time) {
+        this.time = time;
     }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
 }
