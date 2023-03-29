@@ -2,6 +2,7 @@ package com.example.ultimate_sweat_buddies.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
+import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
 import com.example.ultimate_sweat_buddies.databinding.ActivitySignupBinding;
 
 import retrofit2.Call;
@@ -67,29 +69,26 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (signupViewModel.CheckInputs(getApplicationContext())) {
-                    signupViewModel.getApiInterface().getUserEmail(
-                            signupViewModel.getUserEmail()).enqueue(new Callback<GetStatus>() {
+                    signupViewModel.makeApiCall();
+                }
+            }
+        });
+        signupViewModel.getStatusLiveData().observe(this, new Observer<GetStatus>() {
+            @Override
+            public void onChanged(GetStatus getStatus) {
+                if(Integer.parseInt(getStatus.getResponse()) >= 1){
+                    Toast.makeText(getApplicationContext(),
+                            "Error " + signupViewModel.getUserEmail()
+                                    + " exits!", Toast.LENGTH_SHORT).show();
+                    Intent backToMain = new Intent(Signup.this, LoginActivity.class);
+                    startActivity(backToMain);
+                }else{
+                    signupViewModel.postNewUser();
+                    signupViewModel.getNewUserLiveData().observe(Signup.this, new Observer<NewUser>() {
                         @Override
-                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                           if(response.isSuccessful()) {
-                               if(Integer.parseInt(response.body().getResponse()) >= 1){
-                                   Toast.makeText(getApplicationContext(),
-                                           "Error " + signupViewModel.getUserEmail()
-                                   + " exits!", Toast.LENGTH_SHORT).show();
-                                   Intent backToMain = new Intent(Signup.this, LoginActivity.class);
-                                   startActivity(backToMain);
-                               }else{
-                                   Toast.makeText(getApplicationContext(),
-                                           "Welcome " + signupViewModel.getUserName()
-                                   + "!", Toast.LENGTH_SHORT).show();
-                                   Intent mainApp = new Intent(Signup.this, MainActivity.class);
-                                   startActivity(mainApp);
-                               }
-                           }
-                        }
-                        @Override
-                        public void onFailure(Call<GetStatus> call, Throwable t) {
-
+                        public void onChanged(NewUser newUser) {
+                            Intent signInPage = new Intent(Signup.this, Signin.class);
+                            startActivity(signInPage);
                         }
                     });
                 }
