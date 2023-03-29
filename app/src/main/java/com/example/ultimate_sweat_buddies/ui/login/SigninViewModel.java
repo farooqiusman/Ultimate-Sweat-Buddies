@@ -28,6 +28,10 @@ public class SigninViewModel extends ViewModel {
         this.userEmail = useremail;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
     public void checkAuth(){
         if(userEmail != null && userPassword != null){
             apiInterface.checkUsrAuth(this.userEmail, this.userPassword).enqueue(new Callback<GetStatus>() {
