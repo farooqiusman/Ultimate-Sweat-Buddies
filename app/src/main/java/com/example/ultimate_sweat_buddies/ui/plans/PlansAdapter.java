@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,15 +14,18 @@ import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHolder> {
 
     List<WorkoutPlan> plans;
     private Context mContext;
+    private PlansViewModel mViewModel;
 
-    public PlansAdapter(List<WorkoutPlan> exercises, Context mContext) {
-        this.plans = exercises;
+    public PlansAdapter(List<WorkoutPlan> plans, Context mContext, PlansViewModel mViewModel) {
+        this.plans = plans;
         this.mContext = mContext;
+        this.mViewModel = mViewModel;
     }
 
     @NonNull
@@ -36,6 +40,29 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
         WorkoutPlan item = plans.get(position);
         holder.tvName.setText(item.getTitle());
         holder.tvDaysOfWeek.setText("Days of Week: " + item.getDaysOfWeek());
+
+        holder.ibEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.ibDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getAdapterPosition();  // Use this in events since position may not be fixed
+                try {
+                    boolean success = mViewModel.deletePlan(plans.get(pos).getUserEmail(), plans.get(pos).getTitle()).get();
+                    if (success) {
+                        plans.remove(pos);
+                        notifyItemRemoved(pos);
+                    }
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -47,11 +74,15 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
 
         private TextView tvName;
         private TextView tvDaysOfWeek;
+        private ImageButton ibEdit;
+        private ImageButton ibDelete;
 
         public PlansViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvDaysOfWeek = itemView.findViewById(R.id.tvDaysOfWeek);
+            ibEdit = itemView.findViewById(R.id.ibEdit);
+            ibDelete = itemView.findViewById(R.id.ibDelete);
         }
     }
 }
