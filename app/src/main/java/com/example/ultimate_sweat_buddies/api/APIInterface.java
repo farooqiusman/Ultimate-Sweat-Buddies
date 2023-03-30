@@ -1,5 +1,6 @@
 package com.example.ultimate_sweat_buddies.api;
 
+import com.example.ultimate_sweat_buddies.api.apiclasses.GetAllGoals;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
@@ -70,4 +71,7 @@ public interface APIInterface {
 
     @POST("/workout-plan-exercises")
     Call<PostWorkoutPlanExercise> postWorkoutPlanExercise(@Body PostWorkoutPlanExercise body);
+
+    @GET("/goals{user_email}")
+    Call<GetAllGoals> getAllGoals(@Path("user_email") String email);
 }
