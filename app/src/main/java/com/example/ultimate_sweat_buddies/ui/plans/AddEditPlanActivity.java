@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.databinding.ActivityAddEditPlanBinding;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,14 +87,19 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         binding.fabSave.setOnClickListener(view -> {
             String title = String.valueOf(binding.etTitle.getText());
             String daysOfWeek = buildDaysOfWeekString(binding);
-            try {
-                plansViewModel.postPlan("test@test.com", title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
 
-            Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
-            startActivity(mainIntent);
+            if (plansViewModel.validateInput(title, daysOfWeek)) {
+                try {
+                    plansViewModel.postPlan("test@test.com", title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
+                startActivity(mainIntent);
+            } else {
+                Snackbar.make(binding.fabSave, "Enter title and at least one day of week", Snackbar.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -105,6 +112,7 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         if (binding.cbThursday.isChecked()) daysOfWeek += "Th, ";
         if (binding.cbFriday.isChecked()) daysOfWeek += "F, ";
         if (binding.cbSaturday.isChecked()) daysOfWeek += "Sa, ";
+        if (daysOfWeek.isEmpty()) return "";
         return daysOfWeek.substring(0, daysOfWeek.length() - 2);
     }
 
