@@ -46,7 +46,7 @@ public class PlansFragment extends Fragment {
             e.printStackTrace();
         }
 
-        PlansAdapter adapter = new PlansAdapter(data, getContext(), mViewModel);
+        PlansAdapter adapter = new PlansAdapter(data, getContext(), mViewModel, PlansAdapter.PlanListType.EDIT_DELETE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
