@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:visibility="visible">
+
+    <Button
+        android:id="@+id/updt_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="152dp"
+        android:text="Update Email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/updt_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:text="Update Password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updt_email" />
+
+    <EditText
+        android:id="@+id/et_nw_email"
+        android:layout_width="175dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tv_nw_email"
+        app:layout_constraintTop_toBottomOf="@+id/updt_email" />
+
+    <TextView
+        android:id="@+id/tv_nw_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:text="New Email: "
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updt_email" />
+
+    <Button
+        android:id="@+id/go_btn2"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="212dp"
+        android:text="OK"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/et_nw_email"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/updt_usr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Update Username"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_nw_usr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:text="New Username:"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updt_usr" />
+
+    <EditText
+        android:id="@+id/et_nw_usr"
+        android:layout_width="175dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tv_nw_usr"
+        app:layout_constraintTop_toBottomOf="@+id/updt_usr" />
+
+    <Button
+        android:id="@+id/go_btn1"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="OK"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/et_nw_usr"
+        app:layout_constraintTop_toBottomOf="@+id/updt_usr" />
+
+    <TextView
+        android:id="@+id/tv_nw_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:text="New Password:"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updt_pass" />
+
+    <EditText
+        android:id="@+id/et_nw_pass"
+        android:layout_width="175dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:password="true"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tv_nw_pass"
+        app:layout_constraintTop_toBottomOf="@+id/updt_pass" />
+
+    <Button
+        android:id="@+id/go_btn3"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="OK"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/et_nw_pass"
+        app:layout_constraintTop_toBottomOf="@+id/updt_pass" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
