@@ -6,19 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.goals.GoalsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="556dp" />
 
         <Button
-            android:id="@+id/addGoal"
-            android:layout_width="wrap_content"
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="216dp"
-            android:text="Add Goal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="Add Goal" />
+
+    </LinearLayout>
 </FrameLayout>

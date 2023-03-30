@@ -33,7 +33,7 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_goals, container, false);
-        Button addGoal = view.findViewById(R.id.addGoal);
+        Button addGoal = view.findViewById(R.id.addButton);
         Intent intent = new Intent(getActivity(), AddGoalActivity.class);
         addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
