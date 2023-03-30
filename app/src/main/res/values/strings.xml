@@ -36,4 +36,8 @@
     <string name="add">Add</string>
     <string name="save_plan">Save Plan</string>
     <string name="days_of_week">Days of Week: %1$s</string>
+    <string name="select">Select</string>
+    <string name="select_a_plan">Select a Plan</string>
+    <string name="switch_plan">Switch Plan</string>
+    <string name="finish_workout">Finish Workout</string>
 </resources>
