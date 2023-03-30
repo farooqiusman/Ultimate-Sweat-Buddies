@@ -17,13 +17,10 @@ import com.example.ultimate_sweat_buddies.R;
 public class GoalsFragment extends Fragment {
 
     private GoalsViewModel mViewModel;
+    private static GoalsFragment instance;
 
-    public static GoalsFragment instance;
-    public static GoalsFragment newInstance() {
-        return new GoalsFragment();
-    }
     public static GoalsFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new GoalsFragment();
         return instance;
     }
 
@@ -37,7 +34,5 @@ public class GoalsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(GoalsViewModel.class);
-        // TODO: Use the ViewModel
     }
-
 }

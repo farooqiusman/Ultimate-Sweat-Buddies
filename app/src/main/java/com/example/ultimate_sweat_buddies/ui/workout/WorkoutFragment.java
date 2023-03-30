@@ -17,13 +17,10 @@ import com.example.ultimate_sweat_buddies.R;
 public class WorkoutFragment extends Fragment {
 
     private WorkoutViewModel mViewModel;
+    private static WorkoutFragment instance;
 
-    public static WorkoutFragment instance;
-    public static WorkoutFragment newInstance() {
-        return new WorkoutFragment();
-    }
     public static WorkoutFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new WorkoutFragment();
         return instance;
     }
 
@@ -37,7 +34,5 @@ public class WorkoutFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(WorkoutViewModel.class);
-        // TODO: Use the ViewModel
     }
-
 }

@@ -10,7 +10,6 @@ public class RetrofitInstance {
     private static Retrofit retrofit;
     private static final String BASEURL = "https://api.usmanfarooqi.xyz";
 
-
     public static Retrofit getRetrofit() {
         if(retrofit == null){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

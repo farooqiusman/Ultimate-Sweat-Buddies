@@ -20,18 +20,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-
 public class PlansFragment extends Fragment {
 
-
     private final PlansViewModel mViewModel = new PlansViewModel();
+    private static PlansFragment instance;
 
-    public static PlansFragment instance;
-    public static PlansFragment newInstance() {
-        return new PlansFragment();
-    }
     public static PlansFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new PlansFragment();
         return instance;
     }
 
@@ -56,17 +51,13 @@ public class PlansFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         FloatingActionButton fab = view.findViewById(R.id.add_btn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddEditPlanActivity.class);
-                intent.putExtra("update_type", "add");
-                startActivity(intent);
-            }
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddEditPlanActivity.class);
+            intent.putExtra("update_type", "add");
+            startActivity(intent);
         });
 
         return view;
-
     }
 
     @Override

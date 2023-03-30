@@ -18,7 +18,6 @@ import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 import com.example.ultimate_sweat_buddies.databinding.ActivitySigninBinding;
-import com.example.ultimate_sweat_buddies.databinding.ActivitySignupBinding;
 
 public class Signin extends AppCompatActivity {
 
@@ -29,10 +28,12 @@ public class Signin extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         binding = ActivitySigninBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         userEmail = binding.userEmail;
         userPassword = binding.editTextTextPassword2;
         signInButton = binding.signIn;
@@ -55,6 +56,7 @@ public class Signin extends AppCompatActivity {
                         userPassword.getText().toString());
             }
         };
+
         userEmail.addTextChangedListener(afterTextChangedListener);
         userPassword.addTextChangedListener(afterTextChangedListener);
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +65,13 @@ public class Signin extends AppCompatActivity {
                 signinViewModel.checkAuth();
             }
         });
+
         signinViewModel.getStatusLiveData().observe(this, new Observer<GetStatus>() {
             @Override
             public void onChanged(GetStatus getStatus) {
                 String ret = getStatus.getResponse().split(":")[0];
                 String username = getStatus.getResponse().split(":")[1];
-                if(ret.equals("true")){
+                if(ret.equals("true")) {
                     Toast.makeText(getApplicationContext(),
                             "Welcome: " + username + "! ",
                             Toast.LENGTH_SHORT).show();
@@ -77,7 +80,7 @@ public class Signin extends AppCompatActivity {
 
                     Intent goToApp = new Intent(Signin.this, MainActivity.class);
                     startActivity(goToApp);
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(),
                             "Invalid username or password!",
                             Toast.LENGTH_SHORT).show();

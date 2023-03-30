@@ -1,8 +1,5 @@
 package com.example.ultimate_sweat_buddies.ui.exercises;
 
-
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -19,22 +16,16 @@ import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ExercisesFragment extends Fragment {
 
-
     private final ExercisesViewModel mViewModel = new ExercisesViewModel();
+    private static ExercisesFragment instance;
 
-
-    public static ExercisesFragment instance;
-    public static ExercisesFragment newInstance() {
-        return new ExercisesFragment();
-    }
     public static ExercisesFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new ExercisesFragment();
         return instance;
     }
 
@@ -67,7 +58,6 @@ public class ExercisesFragment extends Fragment {
         });
 
         return view;
-
     }
 
     @Override

@@ -19,8 +19,8 @@ import java.util.concurrent.ExecutionException;
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHolder> {
 
     List<WorkoutPlan> plans;
-    private Context mContext;
-    private PlansViewModel mViewModel;
+    private final Context mContext;
+    private final PlansViewModel mViewModel;
 
     public PlansAdapter(List<WorkoutPlan> plans, Context mContext, PlansViewModel mViewModel) {
         this.plans = plans;
@@ -39,28 +39,22 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
     public void onBindViewHolder(@NonNull PlansAdapter.PlansViewHolder holder, int position) {
         WorkoutPlan item = plans.get(position);
         holder.tvName.setText(item.getTitle());
-        holder.tvDaysOfWeek.setText("Days of Week: " + item.getDaysOfWeek());
+        holder.tvDaysOfWeek.setText(mContext.getString(R.string.days_of_week, item.getDaysOfWeek()));
 
-        holder.ibEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.ibEdit.setOnClickListener(view -> {
 
-            }
         });
 
-        holder.ibDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int pos = holder.getAdapterPosition();  // Use this in events since position may not be fixed
-                try {
-                    boolean success = mViewModel.deletePlan(plans.get(pos).getUserEmail(), plans.get(pos).getTitle()).get();
-                    if (success) {
-                        plans.remove(pos);
-                        notifyItemRemoved(pos);
-                    }
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
+        holder.ibDelete.setOnClickListener(view -> {
+            int pos = holder.getAdapterPosition();  // Use this in events since position may not be fixed
+            try {
+                boolean success = mViewModel.deletePlan(plans.get(pos).getUserEmail(), plans.get(pos).getTitle()).get();
+                if (success) {
+                    plans.remove(pos);
+                    notifyItemRemoved(pos);
                 }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -72,10 +66,10 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
 
     public class PlansViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvName;
-        private TextView tvDaysOfWeek;
-        private ImageButton ibEdit;
-        private ImageButton ibDelete;
+        private final TextView tvName;
+        private final TextView tvDaysOfWeek;
+        private final ImageButton ibEdit;
+        private final ImageButton ibDelete;
 
         public PlansViewHolder(@NonNull View itemView) {
             super(itemView);
