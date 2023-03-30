@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.databinding.ActivityAddEditPlanBinding;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
@@ -91,6 +93,9 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
+                startActivity(mainIntent);
             }
         });
     }
