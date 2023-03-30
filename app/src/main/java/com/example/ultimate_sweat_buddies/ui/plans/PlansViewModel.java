@@ -21,17 +21,15 @@ import retrofit2.Response;
 
 public class PlansViewModel extends ViewModel {
 
-    List<EnduranceExercise> enduranceExercises;
-    List<WeightExercise> weightExercises;
     private APIInterface apiInterface;
 
     public PlansViewModel() {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
 
-    public CompletableFuture<List<WorkoutPlan>> getData() {
+    public CompletableFuture<List<WorkoutPlan>> getPlans(String userEmail) {
 
-        Call<List<WorkoutPlan>> call = apiInterface.getWorkoutPlans("test@test.com");
+        Call<List<WorkoutPlan>> call = apiInterface.getWorkoutPlans(userEmail);
 
         CompletableFuture<List<WorkoutPlan>> future = CompletableFuture.supplyAsync(() -> {
             try {
@@ -49,6 +47,24 @@ public class PlansViewModel extends ViewModel {
         });
 
         future.thenAccept(future::complete);
+
+        return future;
+    }
+
+    public CompletableFuture<Boolean> deletePlan(String userEmail, String title) {
+
+        Call<Void> call = apiInterface.deleteWorkoutPlan(userEmail, title);
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        CompletableFuture.runAsync(() -> {
+            try {
+                Response<Void> response = call.execute();
+                future.complete(response.isSuccessful());
+            } catch (IOException e) {
+                Log.e("delete_plan", e.getMessage());
+                future.complete(false);
+            }
+        });
 
         return future;
     }

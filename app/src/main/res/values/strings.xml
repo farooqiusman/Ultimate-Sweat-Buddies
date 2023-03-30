@@ -20,5 +20,10 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_signup">Signup</string>
     <string name="delete">Delete</string>
+<<<<<<< HEAD
     <string name="edit" />
+=======
+    <string name="add_plan">Add Plan</string>
+    <string name="edit">Edit</string>
+>>>>>>> e52075e (Implemented displaying and deleting plans)
 </resources>

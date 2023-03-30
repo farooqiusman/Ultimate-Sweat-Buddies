@@ -1,8 +1,12 @@
 package com.example.ultimate_sweat_buddies.api;
 
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
+<<<<<<< HEAD
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
+=======
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlan;
+>>>>>>> e52075e (Implemented displaying and deleting plans)
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
@@ -13,6 +17,7 @@ import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -54,6 +59,9 @@ public interface APIInterface {
     @GET("/plans/{user_email}")
     Call<List<WorkoutPlan>> getWorkoutPlans(@Path("user_email") String email);
 
-    @POST("/plans/")
-    Call<WorkoutPlan> postWorkoutPlan(@Body WorkoutPlan plan);
+    @POST("/plans")
+    Call<PostWorkoutPlan> postWorkoutPlan(@Body PostWorkoutPlan plan);
+
+    @DELETE("/plans/{user_email}/{title}")
+    Call<Void> deleteWorkoutPlan(@Path("user_email") String userEmail, @Path("title") String title);
 }
