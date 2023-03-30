@@ -72,6 +72,6 @@ public interface APIInterface {
     @POST("/workout-plan-exercises")
     Call<PostWorkoutPlanExercise> postWorkoutPlanExercise(@Body PostWorkoutPlanExercise body);
 
-    @GET("/goals{user_email}")
+    @GET("/goals/{user_email}")
     Call<GetAllGoals> getAllGoals(@Path("user_email") String email);
 }

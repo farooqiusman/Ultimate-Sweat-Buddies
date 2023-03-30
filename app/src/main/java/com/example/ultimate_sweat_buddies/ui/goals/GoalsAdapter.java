@@ -41,19 +41,19 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsViewHol
     public void onBindViewHolder(@NonNull GoalsAdapter.GoalsViewHolder holder, int position) {
         Goal item = goals.get(position);
         if(item instanceof MiscGoals){
-            holder.tvName.setText(item.getId());
+            holder.tvName.setText(((MiscGoals) item).getDescription());
             holder.tvDesc.setText(((MiscGoals) item).getDescription());
         }
         if(item instanceof EnduranceGoals){
-            holder.tvName.setText(item.getId());
+            holder.tvName.setText(item.getId().toString());
             holder.tvDesc.setText(item.getDeadLine());
         }
         if(item instanceof WeightGoals){
-            holder.tvName.setText(((WeightGoals) item).getSets());
-            holder.tvDesc.setText(((WeightGoals) item).getReps());
+            holder.tvName.setText(((WeightGoals) item).getExerciseId().toString());
+            holder.tvDesc.setText(((WeightGoals) item).getCreationDate());
         }
         if(item instanceof BodyWeightGoals){
-            holder.tvName.setText(item.getId());
+            holder.tvName.setText(item.getId().toString());
             holder.tvDesc.setText(((BodyWeightGoals) item).getDescrtiption());
         }
     }

@@ -39,4 +39,12 @@
     <string name="remove">Remove</string>
     <string name="add">Add</string>
     <string name="save_plan">Save Plan</string>
+    <string name="title_misc">Add a new Misc Goal!</string>
+    <string name="title_end">Add a new Endurance Goal!</string>
+    <string name="title_weight">Add a new Weight Goal!</string>
+    <string name="body_title">Add a new Body Weight Goal!</string>
+    <string name="misc_goal_description">Enter Description</string>
+    <string name="misc_goal_deadline">Enter Deadline Date</string>
+    <string name="misc_goal_completed">Completed?</string>
+
 </resources>

@@ -43,13 +43,13 @@ public class GoalsViewModel extends ViewModel {
                     result.addAll(miscGoals);
                 }
                 if (!enduranceGoals.isEmpty()){
-                    result.addAll(miscGoals);
+                    result.addAll(enduranceGoals);
                 }
                 if (!weightGoals.isEmpty()){
-                    result.addAll(miscGoals);
+                    result.addAll(weightGoals);
                 }
                 if (!bodyWeightGoals.isEmpty()){
-                    result.addAll(miscGoals);
+                    result.addAll(bodyWeightGoals);
                 }
                 return result;
             }catch (IOException e){
