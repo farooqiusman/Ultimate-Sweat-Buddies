@@ -95,8 +95,9 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
                     e.printStackTrace();
                 }
 
-                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+//                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
+//                startActivity(mainIntent);
+                finish();
             } else {
                 Snackbar.make(binding.fabSave, "Enter title and at least one day of week", Snackbar.LENGTH_SHORT).show();
             }
