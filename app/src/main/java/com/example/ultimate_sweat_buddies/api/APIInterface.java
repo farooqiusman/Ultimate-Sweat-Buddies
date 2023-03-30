@@ -4,6 +4,7 @@ import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetWorkoutPlanExercises;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlan;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlanExercise;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
@@ -32,9 +33,6 @@ public interface APIInterface {
     @POST("/new-user")
     Call<NewUser> newUser(@Body NewUser newUser);
 
-    @GET("/check_auth/{user_email}/{password}")
-    Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
-
     // Exercises
     @GET("/weight-exercises/{user_email}")
     Call<List<WeightExercise>> getWeightExercises(@Path("user_email") String email);
@@ -59,4 +57,12 @@ public interface APIInterface {
 
     @POST("/workout-plan-exercises")
     Call<PostWorkoutPlanExercise> postWorkoutPlanExercise(@Body PostWorkoutPlanExercise body);
+    @GET("/check_auth/{user_email}/{password}")
+    Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
+
+    @POST
+    Call<Exercise> postExercise(@Body Exercise exercise);
+
+    @POST("/exercises")
+    Call<PostWeightExercise> postWeightExercise(@Body PostWeightExercise postWeightExercise);
 }

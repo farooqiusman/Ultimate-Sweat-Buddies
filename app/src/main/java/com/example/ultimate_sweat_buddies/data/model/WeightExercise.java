@@ -1,9 +1,14 @@
 package com.example.ultimate_sweat_buddies.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class WeightExercise extends Exercise {
 
+    @SerializedName("sets")
     private int sets;
+    @SerializedName("reps")
     private int reps;
+    @SerializedName("weight")
     private int weight;
 
     public WeightExercise(int id, String name, String userEmail, int sets, int reps, int weight) {
