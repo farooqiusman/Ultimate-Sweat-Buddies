@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
+import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 
 import java.util.concurrent.ExecutionException;
 
@@ -26,6 +27,8 @@ public class EnduranceFragment extends Fragment {
     private EditText exerciseName, hours, mins, secs;
     private ExercisesViewModel eVm;
     private Button btn;
+
+    private String email = StoreLoginUser.user.getUserEmail();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,14 +105,14 @@ public class EnduranceFragment extends Fragment {
                 String time = "";
                 time = time + getHours + ":" + getMins + ":" + getSecs;
 
-                pe = new PostEnduranceExercise("endurance" , getName,"akshat@akshat.com" , time);
+                pe = new PostEnduranceExercise("endurance" , getName, email , time);
 
                 try {
                     eVm.postEnduranceExercises(pe).get();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-                startActivity(intent);
+                getActivity().finish();
             }
         });
 

@@ -40,4 +40,6 @@ public abstract class Exercise {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+
 }

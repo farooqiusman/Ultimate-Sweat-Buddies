@@ -45,7 +45,7 @@
         app:srcCompat="@drawable/trashcan" />
 
     <ImageButton
-        android:id="@+id/ibAdd"
+        android:id="@+id/ibEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="#222222"

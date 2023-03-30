@@ -34,8 +34,6 @@ public interface APIInterface {
     @POST("/new-user")
     Call<NewUser> newUser(@Body NewUser newUser);
 
-    @GET("/check_auth/{user_email}/{password}")
-    Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
 
     // Exercises
     @GET("/weight-exercises/{user_email}")
@@ -49,6 +47,12 @@ public interface APIInterface {
 
     @POST("/exercises")
     Call<PostEnduranceExercise> postEnduranceExercise(@Body PostEnduranceExercise postEnduranceExercise);
+
+
+    @DELETE("/exercises/{exercise_type}/{id}")
+    Call<Void> deleteExercise(@Path("id") Integer id, @Path("exercise_type") String exerciseType);
+
+
 
     // Plans
     @GET("/plans/{user_email}")
@@ -66,4 +70,9 @@ public interface APIInterface {
 
     @POST("/workout-plan-exercises")
     Call<PostWorkoutPlanExercise> postWorkoutPlanExercise(@Body PostWorkoutPlanExercise body);
+
+    @GET("/check_auth/{user_email}/{password}")
+    Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
+
+
 }

@@ -31,6 +31,7 @@ public class PlansFragment extends Fragment {
         return instance;
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
