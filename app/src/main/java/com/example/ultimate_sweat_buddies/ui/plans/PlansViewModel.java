@@ -31,6 +31,10 @@ public class PlansViewModel extends ViewModel {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
 
+    public boolean validateInput(String title, String daysOfWeek) {
+        return !title.isEmpty() && !daysOfWeek.isEmpty();
+    }
+
     public CompletableFuture<List<WorkoutPlan>> getPlans(String userEmail) {
 
         Call<List<WorkoutPlan>> call = apiInterface.getWorkoutPlans(userEmail);
