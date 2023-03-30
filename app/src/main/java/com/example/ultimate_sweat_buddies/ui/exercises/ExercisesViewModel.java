@@ -2,14 +2,13 @@ package com.example.ultimate_sweat_buddies.ui.exercises;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ultimate_sweat_buddies.api.APIInterface;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
-import com.example.ultimate_sweat_buddies.data.model.Exercises;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 
 import java.io.IOException;
@@ -18,14 +17,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ExercisesViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
-    List<EnduranceExercise> enduranceExercises;
-    List<WeightExercise> weightExercises;
+
     private APIInterface apiInterface;
 
     public ExercisesViewModel() {
@@ -34,10 +31,10 @@ public class ExercisesViewModel extends ViewModel {
 
 
 
-    public CompletableFuture<List<Exercise>> getData() {
+    public CompletableFuture<List<Exercise>> getExercises(String userEmail) {
 
-        Call<List<WeightExercise>> weightCall = apiInterface.getWeightExercises("test@test.com");
-        Call<List<EnduranceExercise>> enduranceCall = apiInterface.getEnduranceExercises("test@test.com");
+        Call<List<WeightExercise>> weightCall = apiInterface.getWeightExercises(userEmail);
+        Call<List<EnduranceExercise>> enduranceCall = apiInterface.getEnduranceExercises(userEmail);
 
         CompletableFuture<List<WeightExercise>> weightFuture = CompletableFuture.supplyAsync(() -> {
             try {
@@ -82,5 +79,26 @@ public class ExercisesViewModel extends ViewModel {
 
         return combinedFuture;
     }
+
+    public CompletableFuture<PostWeightExercise> postWeightExercises(PostWeightExercise pw){
+        CompletableFuture<PostWeightExercise> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                return apiInterface.postWeightExercise(pw).execute().body();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to send POST request: " + e.getMessage(), e);
+            }
+        });
+        try {
+            PostWeightExercise response = future.get();
+            Log.e("catching", "postWeightExercises: " + response.toString());
+        } catch (Exception e) {
+            Log.e("catching", "postWeightExercises: " + e.getMessage());
+        }
+
+        return future;
+
+    }
+
+
 
 }

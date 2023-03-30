@@ -1,7 +1,9 @@
 package com.example.ultimate_sweat_buddies.api;
 
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
+import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 import java.util.List;
 import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
@@ -32,4 +34,10 @@ public interface APIInterface {
 
     @GET("/check_auth/{user_email}/{password}")
     Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
+
+    @POST
+    Call<Exercise> postExercise(@Body Exercise exercise);
+
+    @POST("/exercises")
+    Call<PostWeightExercise> postWeightExercise(@Body PostWeightExercise postWeightExercise);
 }
