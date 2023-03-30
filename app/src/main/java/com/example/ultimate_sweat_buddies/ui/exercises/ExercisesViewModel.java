@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ultimate_sweat_buddies.api.APIInterface;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ExercisesViewModel extends ViewModel {
@@ -80,24 +82,45 @@ public class ExercisesViewModel extends ViewModel {
         return combinedFuture;
     }
 
-    public CompletableFuture<PostWeightExercise> postWeightExercises(PostWeightExercise pw){
-        CompletableFuture<PostWeightExercise> future = CompletableFuture.supplyAsync(() -> {
-            try {
-                return apiInterface.postWeightExercise(pw).execute().body();
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to send POST request: " + e.getMessage(), e);
-            }
+    //post weight exercise
+    public CompletableFuture<Boolean> postWeightExercises(PostWeightExercise postWeightExercise) {
+
+        Call<PostWeightExercise> call = apiInterface.postWeightExercise(postWeightExercise);
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        CompletableFuture.runAsync(() -> {
+           try {
+               Response<PostWeightExercise> response = call.execute();
+               future.complete(response.isSuccessful());
+           } catch (IOException e){
+               Log.e("post" , e.getMessage());
+           }
         });
-        try {
-            PostWeightExercise response = future.get();
-            Log.e("catching", "postWeightExercises: " + response.toString());
-        } catch (Exception e) {
-            Log.e("catching", "postWeightExercises: " + e.getMessage());
-        }
 
         return future;
 
     }
+
+    //Post Endurance Exercise
+    public CompletableFuture<Boolean> postEnduranceExercises(PostEnduranceExercise postEnduranceExercise){
+
+        Call<PostEnduranceExercise> call = apiInterface.postEnduranceExercise(postEnduranceExercise);
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                Response<PostEnduranceExercise> response = call.execute();
+                future.complete(response.isSuccessful());
+            } catch (IOException e){
+                Log.e("post" , e.getMessage());
+            }
+        });
+
+        return future;
+    }
+
+
+
 
 
 

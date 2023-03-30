@@ -1,6 +1,7 @@
 package com.example.ultimate_sweat_buddies.api;
 
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
@@ -40,4 +41,7 @@ public interface APIInterface {
 
     @POST("/exercises")
     Call<PostWeightExercise> postWeightExercise(@Body PostWeightExercise postWeightExercise);
+
+    @POST("/exercises")
+    Call<PostEnduranceExercise> postEnduranceExercise(@Body PostEnduranceExercise postEnduranceExercise);
 }
