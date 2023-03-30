@@ -11,28 +11,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ultimate_sweat_buddies.R;
-import com.example.ultimate_sweat_buddies.api.APIInterface;
-import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
-import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
-import com.example.ultimate_sweat_buddies.data.model.Exercises;
-import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ExercisesFragment extends Fragment {
 

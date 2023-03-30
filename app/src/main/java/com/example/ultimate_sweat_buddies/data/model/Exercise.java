@@ -1,22 +1,27 @@
 package com.example.ultimate_sweat_buddies.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public abstract class Exercise {
 
-    private int id;
+    @SerializedName("id")
+    private Integer id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("user_email")
     private String userEmail;
 
-    public Exercise(int id, String name, String userEmail) {
+    public Exercise(Integer id, String name, String userEmail) {
         this.id = id;
         this.name = name;
         this.userEmail = userEmail;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
