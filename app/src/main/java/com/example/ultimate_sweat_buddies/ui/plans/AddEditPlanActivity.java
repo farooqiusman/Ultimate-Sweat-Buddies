@@ -98,14 +98,14 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
 
     private String buildDaysOfWeekString(ActivityAddEditPlanBinding binding) {
         String daysOfWeek = "";
-        if (binding.cbSunday.isChecked()) daysOfWeek += "Su";
-        if (binding.cbMonday.isChecked()) daysOfWeek += "M";
-        if (binding.cbTuesday.isChecked()) daysOfWeek += "Tu";
-        if (binding.cbWednesday.isChecked()) daysOfWeek += "W";
-        if (binding.cbThursday.isChecked()) daysOfWeek += "Th";
-        if (binding.cbFriday.isChecked()) daysOfWeek += "F";
-        if (binding.cbSaturday.isChecked()) daysOfWeek += "Sa";
-        return daysOfWeek;
+        if (binding.cbSunday.isChecked()) daysOfWeek += "Su, ";
+        if (binding.cbMonday.isChecked()) daysOfWeek += "M, ";
+        if (binding.cbTuesday.isChecked()) daysOfWeek += "Tu, ";
+        if (binding.cbWednesday.isChecked()) daysOfWeek += "W, ";
+        if (binding.cbThursday.isChecked()) daysOfWeek += "Th, ";
+        if (binding.cbFriday.isChecked()) daysOfWeek += "F, ";
+        if (binding.cbSaturday.isChecked()) daysOfWeek += "Sa, ";
+        return daysOfWeek.substring(0, daysOfWeek.length() - 2);
     }
 
     @Override
