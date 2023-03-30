@@ -52,7 +52,7 @@ public class ExercisesFragment extends Fragment {
             e.printStackTrace();
         }
 
-        ExercisesAdapter adapter = new ExercisesAdapter(data, getContext());
+        ExercisesAdapter adapter = new ExercisesAdapter(data, getContext(), ExercisesAdapter.ExerciseListType.EDIT_DELETE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

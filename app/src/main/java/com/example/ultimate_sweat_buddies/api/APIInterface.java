@@ -1,12 +1,11 @@
 package com.example.ultimate_sweat_buddies.api;
 
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
-<<<<<<< HEAD
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
-=======
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlan;
->>>>>>> e52075e (Implemented displaying and deleting plans)
+import com.example.ultimate_sweat_buddies.api.apiclasses.GetWorkoutPlanExercises;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlanExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
@@ -64,4 +63,11 @@ public interface APIInterface {
 
     @DELETE("/plans/{user_email}/{title}")
     Call<Void> deleteWorkoutPlan(@Path("user_email") String userEmail, @Path("title") String title);
+
+    // Workout Plan Exercises
+    @GET("/workout-plan-exercises/{user_email}/{title}")
+    Call<GetWorkoutPlanExercises> getWorkoutPlanExercises(@Path("user_email") String email, @Path("title") String title);
+
+    @POST("/workout-plan-exercises")
+    Call<PostWorkoutPlanExercise> postWorkoutPlanExercise(@Body PostWorkoutPlanExercise body);
 }

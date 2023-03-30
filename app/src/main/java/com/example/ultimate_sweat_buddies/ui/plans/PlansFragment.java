@@ -1,8 +1,5 @@
 package com.example.ultimate_sweat_buddies.ui.plans;
 
-
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -17,23 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ultimate_sweat_buddies.R;
-import com.example.ultimate_sweat_buddies.api.APIInterface;
-import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
-import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
-import com.example.ultimate_sweat_buddies.data.model.Exercise;
-import com.example.ultimate_sweat_buddies.data.model.Exercises;
-import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PlansFragment extends Fragment {
 
@@ -70,10 +56,11 @@ public class PlansFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         FloatingActionButton fab = view.findViewById(R.id.add_btn);
-        Intent intent = new Intent(getActivity(), AddEditPlanActivity.class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddEditPlanActivity.class);
+                intent.putExtra("update_type", "add");
                 startActivity(intent);
             }
         });
