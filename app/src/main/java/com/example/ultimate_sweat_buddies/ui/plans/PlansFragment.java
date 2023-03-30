@@ -40,7 +40,6 @@ public class PlansFragment extends Fragment {
 
     private final PlansViewModel mViewModel = new PlansViewModel();
 
-
     public static PlansFragment instance;
     public static PlansFragment newInstance() {
         return new PlansFragment();
@@ -54,17 +53,18 @@ public class PlansFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_exercises, container, false);
+        View view = inflater.inflate(R.layout.fragment_plans, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.Recycler_view);
 
         List<WorkoutPlan> data = null;
         try {
-            data = mViewModel.getData().get();  // Waits for the future to return its result
+            data = mViewModel.getPlans("test@test.com").get();  // Waits for the future to return its result
         } catch (ExecutionException | InterruptedException e) {
+            Log.d("error_getting_plans", "could not get plans");
             e.printStackTrace();
         }
 
-        PlansAdapter adapter = new PlansAdapter(data, getContext());
+        PlansAdapter adapter = new PlansAdapter(data, getContext(), mViewModel);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
