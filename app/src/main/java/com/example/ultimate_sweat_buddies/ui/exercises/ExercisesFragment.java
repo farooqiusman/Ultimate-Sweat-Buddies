@@ -58,12 +58,12 @@ public class ExercisesFragment extends Fragment {
 
         List<Exercise> data = null;
         try {
-            data = mViewModel.getData().get();  // Waits for the future to return its result
+            data = mViewModel.getExercises("test@test.com").get();  // Waits for the future to return its result
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        ExercisesAdapter adapter = new ExercisesAdapter(data, getContext());
+        ExercisesAdapter adapter = new ExercisesAdapter(data, getContext(), ExercisesAdapter.ExerciseListType.EDIT_DELETE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -22,4 +22,17 @@
     <string name="delete">Delete</string>
     <string name="add_plan">Add Plan</string>
     <string name="edit">Edit</string>
+    <string name="enter_plan_title">Enter Plan Title</string>
+    <string name="su">Su</string>
+    <string name="m">M</string>
+    <string name="tu">Tu</string>
+    <string name="w">W</string>
+    <string name="tr">Th</string>
+    <string name="f">F</string>
+    <string name="sa">Sa</string>
+    <string name="exercises_in_this_plan">Exercises in this plan:</string>
+    <string name="exercises_not_in_this_plan">Exercises not in this plan:</string>
+    <string name="remove">Remove</string>
+    <string name="add">Add</string>
+    <string name="save_plan">Save Plan</string>
 </resources>

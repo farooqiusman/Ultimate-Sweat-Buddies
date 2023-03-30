@@ -32,12 +32,10 @@ public class ExercisesViewModel extends ViewModel {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
 
+    public CompletableFuture<List<Exercise>> getExercises(String userEmail) {
 
-
-    public CompletableFuture<List<Exercise>> getData() {
-
-        Call<List<WeightExercise>> weightCall = apiInterface.getWeightExercises("test@test.com");
-        Call<List<EnduranceExercise>> enduranceCall = apiInterface.getEnduranceExercises("test@test.com");
+        Call<List<WeightExercise>> weightCall = apiInterface.getWeightExercises(userEmail);
+        Call<List<EnduranceExercise>> enduranceCall = apiInterface.getEnduranceExercises(userEmail);
 
         CompletableFuture<List<WeightExercise>> weightFuture = CompletableFuture.supplyAsync(() -> {
             try {
