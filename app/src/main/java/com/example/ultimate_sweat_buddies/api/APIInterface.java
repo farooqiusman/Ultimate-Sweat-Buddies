@@ -2,11 +2,12 @@ package com.example.ultimate_sweat_buddies.api;
 
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetAllGoals;
 import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
+import com.example.ultimate_sweat_buddies.api.apiclasses.GetWorkoutPlanExercises;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlan;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlanExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
-import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlan;
-import com.example.ultimate_sweat_buddies.api.apiclasses.GetWorkoutPlanExercises;
-import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlanExercise;
+
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
@@ -26,14 +27,19 @@ import retrofit2.http.Query;
 
 public interface APIInterface {
 
+    // DB Status
     @GET("/status")
     Call<GetStatus> getApiStatus();
 
+    // Authorization
     @GET("/user-email")
     Call<GetStatus> getUserEmail(@Query("user_email") String email);
 
     @POST("/new-user")
     Call<NewUser> newUser(@Body NewUser newUser);
+
+    @GET("/check_auth/{user_email}/{password}")
+    Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
 
 
     // Exercises
@@ -42,12 +48,6 @@ public interface APIInterface {
 
     @GET("/endurance-exercises/{user_email}")
     Call<List<EnduranceExercise>> getEnduranceExercises(@Path("user_email") String email);
-
-    @GET("/check_auth/{user_email}/{password}")
-    Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
-
-    @POST
-    Call<Exercise> postExercise(@Body Exercise exercise);
 
     @POST("/exercises")
     Call<PostWeightExercise> postWeightExercise(@Body PostWeightExercise postWeightExercise);
@@ -74,4 +74,5 @@ public interface APIInterface {
 
     @GET("/goals/{user_email}")
     Call<GetAllGoals> getAllGoals(@Path("user_email") String email);
+
 }

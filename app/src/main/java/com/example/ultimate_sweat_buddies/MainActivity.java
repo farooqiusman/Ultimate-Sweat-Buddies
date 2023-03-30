@@ -1,5 +1,6 @@
 package com.example.ultimate_sweat_buddies;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +24,9 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String STATE_FRAGMENT_ID = "fragment_id";
+    private int currentFragmentId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +41,23 @@ public class MainActivity extends AppCompatActivity {
         final NavigationBarView bnvPrimaryNav = binding.bnvPrimaryNav;
         bnvPrimaryNav.setOnItemSelectedListener(item -> switchFragment(item.getItemId()));
 
+        if (savedInstanceState != null) {
+            Log.d("save_instance_state", "not null");
+            currentFragmentId = savedInstanceState.getInt(STATE_FRAGMENT_ID);
+        } else {
+            Log.d("save_instance_state", "null");
+            currentFragmentId = R.id.navWorkout;
+        }
+
         // Show the workout fragment on startup
-        switchFragment(R.id.navWorkout);
+        switchFragment(currentFragmentId);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.d("save_instance_state", "saving");
+        outState.putInt(STATE_FRAGMENT_ID, currentFragmentId);
+        super.onSaveInstanceState(outState);
     }
 
     // Creates the secondary menu in the app bar
@@ -61,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean switchFragment(int fragmentId) {
         // Get the fragment for the clicked on navigation item
         Fragment fragment;
+        int temp = currentFragmentId;
+        currentFragmentId = fragmentId;
         switch (fragmentId) {
             case R.id.navWorkout:
                 fragment = WorkoutFragment.getInstance();
@@ -82,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 Log.e("navigation_error", "Tried to navigate to unknown fragment");
+                currentFragmentId = temp;   // Reset fragmentId to old value if not given a valid fragment id
                 return false;
         }
 

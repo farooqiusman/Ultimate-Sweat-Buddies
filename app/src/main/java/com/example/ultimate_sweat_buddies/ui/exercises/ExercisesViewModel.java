@@ -22,10 +22,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ExercisesViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
 
+    private final APIInterface apiInterface;
 
-    private APIInterface apiInterface;
 
     public ExercisesViewModel() {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
@@ -116,10 +115,5 @@ public class ExercisesViewModel extends ViewModel {
 
         return future;
     }
-
-
-
-
-
 
 }

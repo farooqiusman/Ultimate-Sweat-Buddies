@@ -26,14 +26,12 @@ import java.util.concurrent.ExecutionException;
 
 public class GoalsFragment extends Fragment {
 
-    private GoalsViewModel goalsViewModel = new GoalsViewModel();
 
-    public static GoalsFragment instance;
-    public static GoalsFragment newInstance() {
-        return new GoalsFragment();
-    }
+    private GoalsViewModel goalsViewModel = new GoalsViewModel();
+    private static GoalsFragment instance;
+
     public static GoalsFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new GoalsFragment();
         return instance;
     }
 
@@ -68,5 +66,6 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
     }
 }

@@ -1,8 +1,6 @@
 package com.example.ultimate_sweat_buddies.ui.login;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -16,18 +14,15 @@ import com.example.ultimate_sweat_buddies.api.apiclasses.GetStatus;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
 import com.example.ultimate_sweat_buddies.api.apiclasses.NewUser;
 
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignupViewModel extends ViewModel {
     private String userName, userEmail, userPassword;
-    private APIInterface apiInterface;
-    private MutableLiveData<GetStatus> myresponse = new MutableLiveData<>();
-    private MutableLiveData<NewUser> newUserResponse = new MutableLiveData<>();
-
-    private NewUser newUser;
+    private final APIInterface apiInterface;
+    private final MutableLiveData<GetStatus> myresponse = new MutableLiveData<>();
+    private final MutableLiveData<NewUser> newUserResponse = new MutableLiveData<>();
 
     public SignupViewModel(){
         this.userName = null;
@@ -95,26 +90,26 @@ public class SignupViewModel extends ViewModel {
     public void makeApiCall(){
         apiInterface.getUserEmail(userEmail).enqueue(new Callback<GetStatus>() {
             @Override
-            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+            public void onResponse(@NonNull Call<GetStatus> call, @NonNull Response<GetStatus> response) {
                 myresponse.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<GetStatus> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetStatus> call, @NonNull Throwable t) {
 
             }
         });
     }
 
     public void postNewUser(){
-        newUser = new NewUser(userEmail, userPassword, userName);
+        NewUser newUser = new NewUser(userEmail, userPassword, userName);
         apiInterface.newUser(newUser).enqueue(new Callback<NewUser>() {
             @Override
-            public void onResponse(Call<NewUser> call, Response<NewUser> response) {
+            public void onResponse(@NonNull Call<NewUser> call, @NonNull Response<NewUser> response) {
                 newUserResponse.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<NewUser> call, Throwable t) {
+            public void onFailure(@NonNull Call<NewUser> call, @NonNull Throwable t) {
 
             }
         });

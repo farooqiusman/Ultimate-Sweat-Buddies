@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Exercise {
 
     @SerializedName("id")
-    private Integer id;
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("user_email")

@@ -23,11 +23,9 @@ import java.util.concurrent.ExecutionException;
 
 public class WeightFragment extends Fragment {
 
-
     private EditText exerciseName, sets, reps, weight;
     private Button submit;
     private ExercisesViewModel eVm;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,9 +40,6 @@ public class WeightFragment extends Fragment {
         weight = view.findViewById(R.id.etWeight);
         submit = view.findViewById(R.id.btn_submit);
         Intent intent = new Intent(getContext(), MainActivity.class);
-
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +78,6 @@ public class WeightFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         return view;
     }

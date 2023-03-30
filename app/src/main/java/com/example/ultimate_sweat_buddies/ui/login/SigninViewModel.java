@@ -1,5 +1,6 @@
 package com.example.ultimate_sweat_buddies.ui.login;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,8 +15,8 @@ import retrofit2.Response;
 
 public class SigninViewModel extends ViewModel {
     private String userEmail, userPassword;
-    private APIInterface apiInterface;
-    private MutableLiveData<GetStatus> mutableLiveData = new MutableLiveData<>();
+    private final APIInterface apiInterface;
+    private final MutableLiveData<GetStatus> mutableLiveData = new MutableLiveData<>();
 
     public SigninViewModel(){
         this.userEmail = null;
@@ -36,12 +37,12 @@ public class SigninViewModel extends ViewModel {
         if(userEmail != null && userPassword != null){
             apiInterface.checkUsrAuth(this.userEmail, this.userPassword).enqueue(new Callback<GetStatus>() {
                 @Override
-                public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                public void onResponse(@NonNull Call<GetStatus> call, @NonNull Response<GetStatus> response) {
                     mutableLiveData.setValue(response.body());
                 }
 
                 @Override
-                public void onFailure(Call<GetStatus> call, Throwable t) {
+                public void onFailure(@NonNull Call<GetStatus> call, @NonNull Throwable t) {
 
                 }
             });

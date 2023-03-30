@@ -60,4 +60,5 @@ public class GoalsViewModel extends ViewModel {
         goalFuture.thenAccept(goalFuture::complete);
         return goalFuture;
     }
+
 }

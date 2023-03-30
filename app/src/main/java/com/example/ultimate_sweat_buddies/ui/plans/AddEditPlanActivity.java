@@ -8,13 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.databinding.ActivityAddEditPlanBinding;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesViewModel;
-
+import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -83,33 +82,37 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         rvUnaddedExercises.setLayoutManager(new LinearLayoutManager(this));
 
         // Setup save plan button
-        binding.fabSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = String.valueOf(binding.etTitle.getText());
-                String daysOfWeek = buildDaysOfWeekString(binding);
+
+        binding.fabSave.setOnClickListener(view -> {
+            String title = String.valueOf(binding.etTitle.getText());
+            String daysOfWeek = buildDaysOfWeekString(binding);
+
+            if (plansViewModel.validateInput(title, daysOfWeek)) {
                 try {
                     plansViewModel.postPlan("test@test.com", title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+//                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
+//                startActivity(mainIntent);
+                finish();
+            } else {
+                Snackbar.make(binding.fabSave, "Enter title and at least one day of week", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
 
     private String buildDaysOfWeekString(ActivityAddEditPlanBinding binding) {
         String daysOfWeek = "";
-        if (binding.cbSunday.isChecked()) daysOfWeek += "Su";
-        if (binding.cbMonday.isChecked()) daysOfWeek += "M";
-        if (binding.cbTuesday.isChecked()) daysOfWeek += "Tu";
-        if (binding.cbWednesday.isChecked()) daysOfWeek += "W";
-        if (binding.cbThursday.isChecked()) daysOfWeek += "Th";
-        if (binding.cbFriday.isChecked()) daysOfWeek += "F";
-        if (binding.cbSaturday.isChecked()) daysOfWeek += "Sa";
-        return daysOfWeek;
+        if (binding.cbSunday.isChecked()) daysOfWeek += "Su, ";
+        if (binding.cbMonday.isChecked()) daysOfWeek += "M, ";
+        if (binding.cbTuesday.isChecked()) daysOfWeek += "Tu, ";
+        if (binding.cbWednesday.isChecked()) daysOfWeek += "W, ";
+        if (binding.cbThursday.isChecked()) daysOfWeek += "Th, ";
+        if (binding.cbFriday.isChecked()) daysOfWeek += "F, ";
+        if (binding.cbSaturday.isChecked()) daysOfWeek += "Sa, ";
+        if (daysOfWeek.isEmpty()) return "";
+        return daysOfWeek.substring(0, daysOfWeek.length() - 2);
     }
 
     @Override
