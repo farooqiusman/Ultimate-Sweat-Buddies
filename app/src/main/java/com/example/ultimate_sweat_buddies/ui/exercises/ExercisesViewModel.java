@@ -25,6 +25,7 @@ public class ExercisesViewModel extends ViewModel {
 
     private final APIInterface apiInterface;
 
+
     public ExercisesViewModel() {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
@@ -94,6 +95,7 @@ public class ExercisesViewModel extends ViewModel {
         });
 
         return future;
+
     }
 
     //Post Endurance Exercise

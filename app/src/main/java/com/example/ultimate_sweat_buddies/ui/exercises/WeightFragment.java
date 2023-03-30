@@ -51,6 +51,7 @@ public class WeightFragment extends Fragment {
             Log.e("WeightFragment", "eVm is null");
         }
 
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

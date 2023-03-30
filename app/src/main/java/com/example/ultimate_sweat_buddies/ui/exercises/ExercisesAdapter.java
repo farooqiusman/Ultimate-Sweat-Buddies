@@ -29,6 +29,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
 
 
     private ExercisesAdapterListener listener;
+
     List<Exercise> exercises;
 
     private Context mContext;

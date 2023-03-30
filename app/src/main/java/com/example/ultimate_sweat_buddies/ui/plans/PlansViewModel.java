@@ -30,7 +30,6 @@ public class PlansViewModel extends ViewModel {
     public PlansViewModel() {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
-
     public boolean validateInput(String title, String daysOfWeek) {
         return !title.isEmpty() && !daysOfWeek.isEmpty();
     }

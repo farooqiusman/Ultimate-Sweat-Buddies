@@ -7,15 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
+import android.view.View;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.databinding.ActivityAddEditPlanBinding;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesViewModel;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -84,6 +82,7 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         rvUnaddedExercises.setLayoutManager(new LinearLayoutManager(this));
 
         // Setup save plan button
+
         binding.fabSave.setOnClickListener(view -> {
             String title = String.valueOf(binding.etTitle.getText());
             String daysOfWeek = buildDaysOfWeekString(binding);
@@ -94,7 +93,6 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-
 //                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
 //                startActivity(mainIntent);
                 finish();

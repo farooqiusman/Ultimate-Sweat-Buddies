@@ -22,6 +22,15 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ui.goals.AddGoalActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.profile.EditProfile"
+            android:exported="false" />
+
+        <activity
+
             android:name=".ui.login.Signin"
             android:exported="false" />
         <activity
