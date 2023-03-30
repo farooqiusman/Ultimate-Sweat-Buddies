@@ -17,13 +17,10 @@ import com.example.ultimate_sweat_buddies.R;
 public class HistoryFragment extends Fragment {
 
     private HistoryViewModel mViewModel;
+    private static HistoryFragment instance;
 
-    public static HistoryFragment instance;
-    public static HistoryFragment newInstance() {
-        return new HistoryFragment();
-    }
     public static HistoryFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new HistoryFragment();
         return instance;
     }
 
@@ -37,7 +34,6 @@ public class HistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

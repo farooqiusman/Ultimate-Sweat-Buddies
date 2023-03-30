@@ -35,5 +35,5 @@
     <string name="remove">Remove</string>
     <string name="add">Add</string>
     <string name="save_plan">Save Plan</string>
-
+    <string name="days_of_week">Days of Week: %1$s</string>
 </resources>

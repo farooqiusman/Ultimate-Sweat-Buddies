@@ -5,23 +5,23 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Exercise {
 
     @SerializedName("id")
-    private Integer id;
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("user_email")
     private String userEmail;
 
-    public Exercise(Integer id, String name, String userEmail) {
+    public Exercise(int id, String name, String userEmail) {
         this.id = id;
         this.name = name;
         this.userEmail = userEmail;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

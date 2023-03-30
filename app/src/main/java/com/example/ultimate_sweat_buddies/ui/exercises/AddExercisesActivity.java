@@ -17,8 +17,6 @@ public class AddExercisesActivity extends AppCompatActivity {
     WeightFragment weight = new WeightFragment();
 
     TextView tv;
-
-
     Switch s;
 
     @Override

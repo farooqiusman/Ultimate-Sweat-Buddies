@@ -1,7 +1,9 @@
 package com.example.ultimate_sweat_buddies.data.model;
 
 public class LoginUser {
-    private String userName, userEmail;
+
+    private String userName;
+    private String userEmail;
 
     public LoginUser(){
         this.userName = null;

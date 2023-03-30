@@ -17,13 +17,10 @@ import com.example.ultimate_sweat_buddies.R;
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
+    private static ProfileFragment instance;
 
-    public static ProfileFragment instance;
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
-    }
     public static ProfileFragment getInstance() {
-        if (instance == null) instance = newInstance();
+        if (instance == null) instance = new ProfileFragment();
         return instance;
     }
 
@@ -37,7 +34,6 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

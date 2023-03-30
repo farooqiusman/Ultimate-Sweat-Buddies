@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
@@ -83,20 +82,17 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         rvUnaddedExercises.setLayoutManager(new LinearLayoutManager(this));
 
         // Setup save plan button
-        binding.fabSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = String.valueOf(binding.etTitle.getText());
-                String daysOfWeek = buildDaysOfWeekString(binding);
-                try {
-                    plansViewModel.postPlan("test@test.com", title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+        binding.fabSave.setOnClickListener(view -> {
+            String title = String.valueOf(binding.etTitle.getText());
+            String daysOfWeek = buildDaysOfWeekString(binding);
+            try {
+                plansViewModel.postPlan("test@test.com", title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
+
+            Intent mainIntent = new Intent(AddEditPlanActivity.this, MainActivity.class);
+            startActivity(mainIntent);
         });
     }
 

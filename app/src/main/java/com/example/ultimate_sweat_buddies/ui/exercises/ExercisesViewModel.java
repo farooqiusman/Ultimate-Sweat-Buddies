@@ -22,10 +22,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ExercisesViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
 
-
-    private APIInterface apiInterface;
+    private final APIInterface apiInterface;
 
     public ExercisesViewModel() {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
@@ -96,9 +94,7 @@ public class ExercisesViewModel extends ViewModel {
         });
 
         return future;
-
     }
-
 
     //Post Endurance Exercise
     public CompletableFuture<Boolean> postEnduranceExercises(PostEnduranceExercise postEnduranceExercise){

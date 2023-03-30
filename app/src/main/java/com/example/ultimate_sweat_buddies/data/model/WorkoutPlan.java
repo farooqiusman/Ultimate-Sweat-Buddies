@@ -2,8 +2,6 @@ package com.example.ultimate_sweat_buddies.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Date;
-
 public class WorkoutPlan {
 
     @SerializedName("user_email")
