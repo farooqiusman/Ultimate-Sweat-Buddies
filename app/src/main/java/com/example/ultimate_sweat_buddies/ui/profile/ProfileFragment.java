@@ -17,18 +17,14 @@ import android.widget.TextView;
 
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
-import com.example.ultimate_sweat_buddies.ui.exercises.AddExercisesActivity;
+import com.example.ultimate_sweat_buddies.ui.login.LoginActivity;
+
 
 public class ProfileFragment extends Fragment {
-
     private ProfileViewModel mViewModel;
-
     private static ProfileFragment instance;
-
-    private TextView tv_wel;
-    private TextView tv_user;
-    private TextView tv_email;
-    private Button edit_profile_btn;
+    private TextView tv_wel, tv_user, tv_email;
+    private Button edit_profile_btn, logout_btn;
 
 
     public static ProfileFragment getInstance() {
@@ -47,12 +43,20 @@ public class ProfileFragment extends Fragment {
         tv_user.setText("Username: " + StoreLoginUser.user.getUserName());
         tv_email = view.findViewById(R.id.tv_email);
         tv_email.setText("Email: " + StoreLoginUser.user.getUserEmail());
-        Intent intent = new Intent(getActivity(), EditProfile.class);
+        Intent intent1 = new Intent(getActivity(), EditProfile.class);
         edit_profile_btn = view.findViewById(R.id.edit_pro);
         edit_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(intent);
+                startActivity(intent1);
+            }
+        });
+        logout_btn = view.findViewById(R.id.logout_btn);
+        Intent intent2 = new Intent(getActivity(), LoginActivity.class);
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((intent2));
             }
         });
         return view;
