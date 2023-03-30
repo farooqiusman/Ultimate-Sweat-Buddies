@@ -18,9 +18,6 @@
             android:name=".ui.login.Signin"
             android:exported="false" />
         <activity
-            android:name=".ui.login.singin"
-            android:exported="false" />
-        <activity
             android:name=".ui.exercises.AddExercisesActivity"
             android:exported="false">
             <meta-data
