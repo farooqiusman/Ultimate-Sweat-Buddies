@@ -19,6 +19,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHolder> {
+    public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
+        void onPlanSelected(WorkoutPlan plan);
+    }
+
+    private PlansAdapter.PlansAdapterListener listener;
 
     public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
         void onPlanSelected(WorkoutPlan plan);
@@ -109,7 +114,6 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
     }
 
     public class PlansViewHolder extends RecyclerView.ViewHolder {
-
         private final TextView tvName;
         private final TextView tvDaysOfWeek;
         private ImageButton ibButton1;
@@ -119,6 +123,7 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvDaysOfWeek = itemView.findViewById(R.id.tvDaysOfWeek);
+            
             switch (type) {
                 case EDIT_DELETE:
                     ibButton1 = itemView.findViewById(R.id.ibEdit);

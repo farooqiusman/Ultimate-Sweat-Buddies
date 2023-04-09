@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExercisesViewHolder> {
 
@@ -24,8 +26,12 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         void onExerciseRemoved(Exercise ex, ExerciseListType type);
     }
 
+
+
     private ExercisesAdapterListener listener;
+
     List<Exercise> exercises;
+
     private Context mContext;
     public enum ExerciseListType {
         EDIT_DELETE, ADD, REMOVE    // Exercises page allows editing and deleting items, but the workout plans
@@ -33,12 +39,18 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
                                     // be "REMOVEd" and one with unadded exercises that can be "ADDed"
     }
     private ExerciseListType type;
+    private final ExercisesViewModel mViewModel = new ExercisesViewModel();
+
 
     public ExercisesAdapter(List<Exercise> exercises, Context mContext, ExerciseListType type) {
         this.exercises = exercises;
         this.mContext = mContext;
         this.type = type;
     }
+
+
+
+
 
     public void setListener(ExercisesAdapterListener listener) {
         this.listener = listener;
@@ -80,7 +92,32 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         switch (type) {
             case EDIT_DELETE:
                 // edit and delete button listeners
+                holder.ibButton2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int pos = holder.getAdapterPosition();
+
+                        Toast.makeText(mContext, "Exercise deleted", Toast.LENGTH_SHORT).show();
+                        try{
+                            String exerciseType = exercises.get(pos) instanceof WeightExercise ? "weight" : "endurance";
+
+                            Boolean success = mViewModel.deleteExercise(exercises.get(pos).getId(), exerciseType).get();
+                            if (success) {
+                                Exercise ex = exercises.remove(pos);
+
+                                notifyItemRemoved(pos);
+                                if(listener != null)
+                                    listener.onExerciseRemoved(ex, type);
+                            }
+
+
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 break;
+
             case ADD:
                 holder.ibButton1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -91,6 +128,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
                         listener.onExerciseRemoved(ex, type);
                     }
                 });
+                break;
             case REMOVE:
                 holder.ibButton1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -101,6 +139,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
                         listener.onExerciseRemoved(ex, type);
                     }
                 });
+                break;
         }
     }
 

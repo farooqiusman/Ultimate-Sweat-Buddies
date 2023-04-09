@@ -11,17 +11,17 @@ public abstract class Exercise {
     @SerializedName("user_email")
     private String userEmail;
 
-    public Exercise(int id, String name, String userEmail) {
+    public Exercise(Integer id, String name, String userEmail) {
         this.id = id;
         this.name = name;
         this.userEmail = userEmail;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,4 +40,6 @@ public abstract class Exercise {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+
 }

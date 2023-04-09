@@ -25,6 +25,7 @@ public class ExercisesViewModel extends ViewModel {
 
     private final APIInterface apiInterface;
 
+
     public ExercisesViewModel() {
         this.apiInterface = RetrofitInstance.getRetrofit().create(APIInterface.class);
     }
@@ -94,6 +95,7 @@ public class ExercisesViewModel extends ViewModel {
         });
 
         return future;
+
     }
 
     //Post Endurance Exercise
@@ -109,6 +111,50 @@ public class ExercisesViewModel extends ViewModel {
             } catch (IOException e){
                 Log.e("post" , e.getMessage());
             }
+        });
+
+        return future;
+    }
+
+    //delete exercises
+//    public CompletableFuture<Void> deleteExercise(Integer exerciseId) {
+//        CompletableFuture<Void> future = new CompletableFuture<>();
+//
+//        apiInterface.deleteExercise(exerciseId).enqueue(new retrofit2.Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if (response.isSuccessful()) {
+//                    System.out.println("Exercise deleted successfully");
+//                    future.complete(null);
+//                } else {
+//                    System.err.println("Failed to delete exercise");
+//                    future.completeExceptionally(new RuntimeException("Failed to delete exercise"));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                System.err.println("Failed to delete exercise: " + t.getMessage());
+//                future.completeExceptionally(t);
+//            }
+//        });
+//
+//        return future;
+//    }
+
+//    String type = "weight";
+    public CompletableFuture<Boolean> deleteExercise(Integer id, String type){
+        Call<Void> call = apiInterface.deleteExercise(id, type);
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        CompletableFuture.runAsync(() -> {
+           try{
+               Response<Void> response = call.execute();
+               future.complete(response.isSuccessful());
+           } catch (IOException e){
+               Log.e("deleting_exercise", e.getMessage());
+               future.complete(false);
+           }
         });
 
         return future;

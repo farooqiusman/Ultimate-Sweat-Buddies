@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
+import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 
 import java.util.concurrent.ExecutionException;
 
@@ -26,6 +28,11 @@ public class WeightFragment extends Fragment {
     private EditText exerciseName, sets, reps, weight;
     private Button submit;
     private ExercisesViewModel eVm;
+
+
+
+    private String email = StoreLoginUser.user.getUserEmail();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +46,11 @@ public class WeightFragment extends Fragment {
         reps = view.findViewById(R.id.etReps);
         weight = view.findViewById(R.id.etWeight);
         submit = view.findViewById(R.id.btn_submit);
-        Intent intent = new Intent(getContext(), MainActivity.class);
+//        eVm = new ViewModelProvider(this).get(ExercisesViewModel.class);
+        if (eVm == null) {
+            Log.e("WeightFragment", "eVm is null");
+        }
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,32 +62,17 @@ public class WeightFragment extends Fragment {
                 int getWeight = Integer.parseInt(weight.getText().toString());
 
                 //error checking
-                if(getSets == 0 || getReps == 0 || getWeight == 0){
-                    Toast.makeText(getContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
-                    exerciseName.setText("");
-                    sets.setText("");
-                    reps.setText("");
-                    weight.setText("");
-                    return;
-                }
-
-                if(getName.equals("")){
-                    Toast.makeText(getContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
-                    exerciseName.setText("");
-                    sets.setText("");
-                    reps.setText("");
-                    weight.setText("");
-                    return;
-                }
+                // error checking
 
 
-                pw = new PostWeightExercise("weight", getName, "akshat@akshat.com", getSets, getReps, getWeight);
+
+                pw = new PostWeightExercise("weight", getName, email, getSets, getReps, getWeight);
                 try {
                     eVm.postWeightExercises(pw).get();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-                startActivity(intent);
+                getActivity().finish();
             }
         });
 

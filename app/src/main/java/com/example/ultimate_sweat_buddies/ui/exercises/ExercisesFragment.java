@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
+import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class ExercisesFragment extends Fragment {
         return instance;
     }
 
+    private String email = StoreLoginUser.user.getUserEmail();
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class ExercisesFragment extends Fragment {
 
         List<Exercise> data = null;
         try {
-            data = mViewModel.getExercises("test@test.com").get();  // Waits for the future to return its result
+            data = mViewModel.getExercises(email).get();  // Waits for the future to return its result
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

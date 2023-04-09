@@ -6,7 +6,6 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.api.APIInterface;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
 

@@ -42,6 +42,7 @@ public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapt
     private TextView tvTitle;
     private RecyclerView rvSelectPlan;
     private RecyclerView rvWorkout;
+
     private LinearLayout llSwitchOrFinish;
     private Button btnSwitchPlan;
     private Button btnFinishWorkout;
