@@ -40,4 +40,6 @@
     <string name="select_a_plan">Select a Plan</string>
     <string name="switch_plan">Switch Plan</string>
     <string name="finish_workout">Finish Workout</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 </resources>
