@@ -19,11 +19,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHolder> {
-    public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
-        void onPlanSelected(WorkoutPlan plan);
-    }
-
-    private PlansAdapter.PlansAdapterListener listener;
 
     public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
         void onPlanSelected(WorkoutPlan plan);
