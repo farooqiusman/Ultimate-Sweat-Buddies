@@ -21,8 +21,10 @@ import java.util.List;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
 
-    public interface WorkoutAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
+    public interface WorkoutAdapterListener {
         void onExerciseCompleted(Exercise ex);
+        void onEditClicked(Exercise ex);
+        Exercise getValidEdits(Exercise ex);
     }
 
     private WorkoutAdapter.WorkoutAdapterListener listener;
@@ -62,14 +64,22 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         }
 
         holder.ibEdit.setOnClickListener(view -> {
-
+            int pos = holder.getAdapterPosition();
+            Exercise ex = exercises.get(pos);
+            listener.onEditClicked(ex);
         });
 
         holder.ibComplete.setOnClickListener(view -> {
             int pos = holder.getAdapterPosition();
             Exercise ex = exercises.remove(pos);
             notifyItemRemoved(pos);
-            listener.onExerciseCompleted(ex);
+
+            // If there are valid edits, and the user clicked finish on the exercise being edited,
+            // then use the edited info instead of the info in this exercise. Note that
+            // hasValidEdits() checks if the exercise id we pass to it is the exercise being edited,
+            // and returns null if there aren't valid edits
+            Exercise editedExercise = listener.getValidEdits(ex);
+            listener.onExerciseCompleted(editedExercise == null ? ex : editedExercise);
         });
     }
 

@@ -11,16 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ultimate_sweat_buddies.R;
-
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
-
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHolder> {
+
     public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
         void onPlanSelected(WorkoutPlan plan);
     }
@@ -46,7 +45,6 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
 
     public void setListener(PlansAdapter.PlansAdapterListener listener) {
         this.listener = listener;
-
     }
 
     @NonNull
@@ -103,7 +101,6 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
                 });
                 break;
         }
-
     }
 
     @Override
@@ -117,12 +114,11 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
         private ImageButton ibButton1;
         private ImageButton ibButton2;
 
-
         public PlansViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvDaysOfWeek = itemView.findViewById(R.id.tvDaysOfWeek);
-
+            
             switch (type) {
                 case EDIT_DELETE:
                     ibButton1 = itemView.findViewById(R.id.ibEdit);
@@ -132,7 +128,6 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
                     ibButton1 = itemView.findViewById(R.id.ibSelect);
                     break;
             }
-
         }
     }
 }
