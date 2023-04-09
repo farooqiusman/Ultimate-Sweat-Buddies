@@ -82,8 +82,29 @@ public class HistoryFragment extends Fragment {
             return view;
         }
 
-        // Get the exercise logs for the most recent workout log and put them into the adapter
-        List<String> workoutLogLines = Arrays.asList(workoutLogs.get(0).split("\n"));
+        setupAdapter(historyViewModel.getHistoryPos());
+
+        // Set the on click listener for the prev and next buttons
+        ibPrev.setOnClickListener(v -> {
+            if (historyViewModel.getHistoryPos() > 0) {
+                historyViewModel.decrementHistoryPos();
+                setupAdapter(historyViewModel.getHistoryPos());
+            }
+        });
+
+        ibNext.setOnClickListener(v -> {
+            if (historyViewModel.getHistoryPos() < workoutLogs.size() - 1) {
+                historyViewModel.incrementHistoryPos();
+                setupAdapter(historyViewModel.getHistoryPos());
+            }
+        });
+
+        return view;
+    }
+
+    private void setupAdapter(int pos) {
+    // Get the exercise logs for the most recent workout log and put them into the adapter
+        List<String> workoutLogLines = Arrays.asList(workoutLogs.get(pos).split("\n"));
 
         // Get the workout date and plan name from the header and set the text views accordingly
         String[] headerLineTokens = workoutLogLines.get(0).split(",");
@@ -95,7 +116,5 @@ public class HistoryFragment extends Fragment {
 
         rvWorkoutLog.setAdapter(adapter);
         rvWorkoutLog.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        return view;
     }
 }

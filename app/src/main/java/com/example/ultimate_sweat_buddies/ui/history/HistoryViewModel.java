@@ -15,6 +15,20 @@ import java.util.List;
 
 public class HistoryViewModel extends ViewModel {
 
+    private int historyPos = 0; // The position in the workout logs array that is currently being shown
+
+    public int getHistoryPos() {
+        return historyPos;
+    }
+
+    public void incrementHistoryPos() {
+        historyPos++;
+    }
+
+    public void decrementHistoryPos() {
+        historyPos--;
+    }
+
     public List<String> readLoggedWorkouts(File filesDir) {
         List<String> fileContents = new ArrayList<>();
         try {
