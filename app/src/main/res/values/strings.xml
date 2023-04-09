@@ -43,4 +43,10 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="no_workouts_logged_yet">No Workouts Logged Yet</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+    <string name="weight">Weight</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
 </resources>

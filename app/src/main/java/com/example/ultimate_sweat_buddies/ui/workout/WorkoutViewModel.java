@@ -23,6 +23,16 @@ import java.util.List;
 
 public class WorkoutViewModel extends ViewModel {
 
+    private int exerciseBeingEditedId = -1;
+
+    public int getExerciseBeingEditedId() {
+        return exerciseBeingEditedId;
+    }
+
+    public void setExerciseBeingEditedId(int exerciseBeingEditedId) {
+        this.exerciseBeingEditedId = exerciseBeingEditedId;
+    }
+
     public String getDayOfWeek(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
