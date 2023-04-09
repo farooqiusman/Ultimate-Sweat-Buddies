@@ -19,114 +19,48 @@ import java.util.concurrent.ExecutionException;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
-    public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
-        void onPlanSelected(WorkoutPlan plan);
-    }
+    List<String> workoutLogLines;
 
-    private HistoryAdapter.PlansAdapterListener listener;
-
-    List<WorkoutPlan> plans;
-    private final Context mContext;
-    private final PlansViewModel mViewModel;
-
-    public enum PlanListType {
-        EDIT_DELETE, SELECT     // Plans page allows editing and deleting items, but the workout
-                                // page allows you to select a plan
-    }
-    private final PlanListType type;
-
-    public HistoryAdapter(List<WorkoutPlan> plans, Context mContext, PlansViewModel mViewModel, PlanListType type) {
-        this.plans = plans;
-        this.mContext = mContext;
-        this.mViewModel = mViewModel;
-        this.type = type;
-    }
-
-    public void setListener(HistoryAdapter.PlansAdapterListener listener) {
-        this.listener = listener;
+    public HistoryAdapter(List<String> workoutLogLines) {
+        this.workoutLogLines = workoutLogLines;
     }
 
     @NonNull
     @Override
     public HistoryAdapter.HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = null;
-        switch (type) {
-            case EDIT_DELETE:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_plan_item_layout, parent, false);
-                break;
-            case SELECT:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.select_workout_plan_item_layout, parent, false);
-                break;
-        }
-        assert view != null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item_layout, parent, false);
         return new HistoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.HistoryViewHolder holder, int position) {
-        WorkoutPlan item = plans.get(position);
-        holder.tvName.setText(item.getTitle());
-        holder.tvDaysOfWeek.setText(mContext.getString(R.string.days_of_week, item.getDaysOfWeek()));
+        String exerciseItem = workoutLogLines.get(position);
+        String[] tokens = exerciseItem.split(",");
 
-        switch (type) {
-            case EDIT_DELETE:
-                // edit and delete button listeners
-                holder.ibButton1.setOnClickListener(view -> {
-
-                });
-
-                holder.ibButton2.setOnClickListener(view -> {
-                    int pos = holder.getAdapterPosition();  // Use this in events since position may not be fixed
-                    try {
-                        boolean success = mViewModel.deletePlan(plans.get(pos).getUserEmail(), plans.get(pos).getTitle()).get();
-                        if (success) {
-                            plans.remove(pos);
-                            notifyItemRemoved(pos);
-                        }
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
-                break;
-            case SELECT:
-                // Select button listener
-                holder.ibButton1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int pos = holder.getAdapterPosition();
-                        WorkoutPlan plan = plans.get(pos);
-                        listener.onPlanSelected(plan);
-                    }
-                });
-                break;
+        // Each line is composed of "type,name,sets,reps,weight" or "type,name,time"
+        holder.tvExerciseName.setText(tokens[1]);
+        if (tokens[0].equals("weight")) {
+            holder.tvExerciseDesc.setText(String.format("Sets: %s, Reps: %s, Weight: %s",
+                    tokens[2], tokens[3], tokens[4]));
+        } else if (tokens[0].equals("endurance")) {
+            holder.tvExerciseDesc.setText(String.format("Time: %s", tokens[2]));
         }
     }
 
     @Override
     public int getItemCount() {
-        return plans.size();
+        return workoutLogLines.size();
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView tvName;
-        private final TextView tvDaysOfWeek;
-        private ImageButton ibButton1;
-        private ImageButton ibButton2;
+        private final TextView tvExerciseName;
+        private final TextView tvExerciseDesc;
 
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvName);
-            tvDaysOfWeek = itemView.findViewById(R.id.tvDaysOfWeek);
-            switch (type) {
-                case EDIT_DELETE:
-                    ibButton1 = itemView.findViewById(R.id.ibEdit);
-                    ibButton2 = itemView.findViewById(R.id.ibDelete);
-                    break;
-                case SELECT:
-                    ibButton1 = itemView.findViewById(R.id.ibSelect);
-                    break;
-            }
+            tvExerciseName = itemView.findViewById(R.id.tvExerciseName);
+            tvExerciseDesc = itemView.findViewById(R.id.tvExerciseDesc);
         }
     }
 }

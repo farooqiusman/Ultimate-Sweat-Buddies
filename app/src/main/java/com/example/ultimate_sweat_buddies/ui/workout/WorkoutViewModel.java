@@ -39,17 +39,18 @@ public class WorkoutViewModel extends ViewModel {
         }
     }
 
-    public String getFormattedFilename(Date date) {
+    public String getFormattedDateString(Date date, String formatPattern) {
         // create a format object using SimpleDateFormat class
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(formatPattern);
 
         // convert date to string timestamp
-        String timestamp = dateFormat.format(date);
+        String dateString = dateFormat.format(date);
 
-        return timestamp + ".txt";
+        return dateString;
     }
 
-    public void logWorkoutToFile(File filesDir, String filename, String output) {
+    public void logWorkoutToFile(File filesDir, Date workoutDate, String output) {
+        String filename = getFormattedDateString(workoutDate, "yyyyMMddHHmmss") + ".txt";
         try {
             File directory = new File(filesDir, "workout_logs");
             if (!directory.exists()) {

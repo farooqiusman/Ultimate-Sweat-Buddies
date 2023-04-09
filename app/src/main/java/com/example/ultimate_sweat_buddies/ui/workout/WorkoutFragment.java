@@ -43,6 +43,7 @@ public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapt
     private Button btnFinishWorkout;
 
     private StringBuilder logOutput;
+    private Date workoutDate;
 
     public WorkoutFragment() {
     }
@@ -97,12 +98,11 @@ public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapt
         });
 
         btnFinishWorkout.setOnClickListener(v -> {
-            String filename = workoutViewModel.getFormattedFilename(new Date());
             try {
                 Context ctx = getContext();
                 if (ctx != null) {
                     File filesDir = ctx.getFilesDir();
-                    workoutViewModel.logWorkoutToFile(filesDir, filename, logOutput.toString());
+                    workoutViewModel.logWorkoutToFile(filesDir, workoutDate, logOutput.toString());
                 }
             } catch (NullPointerException ex) {
                 Log.e("finish_workout", ex.getMessage());
@@ -120,8 +120,11 @@ public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapt
     @Override
     public void onPlanSelected(WorkoutPlan plan) {
         try {
-            // Create the output string builder
-            logOutput = new StringBuilder(String.format("Plan Name: %s\n", plan.getTitle()));
+            workoutDate = new Date();
+            String dateText = workoutViewModel.getFormattedDateString(workoutDate, "yyyy-MM-dd");
+
+            // Create the output string builder with the workout date and chosen plan name (header of the log file)
+            logOutput = new StringBuilder(String.format("%s,%s\n", dateText, plan.getTitle()));
 
             List<Exercise> workoutPlanExercises = plansViewModel.getWorkoutPlanExercises(plan.getUserEmail(), plan.getTitle()).get();
 
@@ -153,10 +156,10 @@ public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapt
         // Add exercise details to log
         if (ex instanceof WeightExercise) {
             WeightExercise we = (WeightExercise) ex;
-            logOutput.append(String.format("Exercise: %s, Sets: %d, Reps: %d, Weight: %d\n", we.getName(), we.getSets(), we.getReps(), we.getWeight()));
+            logOutput.append(String.format("weight,%s,%d,%d,%d\n", we.getName(), we.getSets(), we.getReps(), we.getWeight()));
         } else if (ex instanceof EnduranceExercise) {
             EnduranceExercise ee = (EnduranceExercise) ex;
-            logOutput.append(String.format("Exercise: %s, Time: %s\n", ee.getName(), ee.getTime()));
+            logOutput.append(String.format("endurance,%s,%s\n", ee.getName(), ee.getTime()));
         }
     }
 }
