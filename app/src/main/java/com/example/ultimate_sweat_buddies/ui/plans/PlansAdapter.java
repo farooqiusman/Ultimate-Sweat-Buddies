@@ -11,20 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ultimate_sweat_buddies.R;
-import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
-import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHolder> {
 
-    public interface PlansAdapterListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
+    public interface PlansAdapterSelectListener { // Used in AddEditPlanActivity to move exercises between two exercises adapters
         void onPlanSelected(WorkoutPlan plan);
     }
 
-    private PlansAdapter.PlansAdapterListener listener;
+    public interface PlansAdapterEditListener {
+        void onEditPlanClicked(WorkoutPlan plan);
+    }
+
+    private PlansAdapter.PlansAdapterSelectListener selectPlanListener;
+    private PlansAdapter.PlansAdapterEditListener editPlanListener;
 
     List<WorkoutPlan> plans;
     private final Context mContext;
@@ -43,8 +46,12 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
         this.type = type;
     }
 
-    public void setListener(PlansAdapter.PlansAdapterListener listener) {
-        this.listener = listener;
+    public void setSelectPlanListener(PlansAdapter.PlansAdapterSelectListener listener) {
+        this.selectPlanListener = listener;
+    }
+
+    public void setEditPlanListener(PlansAdapter.PlansAdapterEditListener listener) {
+        this.editPlanListener = listener;
     }
 
     @NonNull
@@ -73,7 +80,9 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
             case EDIT_DELETE:
                 // edit and delete button listeners
                 holder.ibButton1.setOnClickListener(view -> {
-
+                    // Get the plan from the adapter position
+                    WorkoutPlan plan = plans.get(holder.getAdapterPosition());
+                    editPlanListener.onEditPlanClicked(plan);
                 });
 
                 holder.ibButton2.setOnClickListener(view -> {
@@ -96,7 +105,7 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlansViewHol
                     public void onClick(View v) {
                         int pos = holder.getAdapterPosition();
                         WorkoutPlan plan = plans.get(pos);
-                        listener.onPlanSelected(plan);
+                        selectPlanListener.onPlanSelected(plan);
                     }
                 });
                 break;

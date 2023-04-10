@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapterListener, WorkoutAdapter.WorkoutAdapterListener {
+public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapterSelectListener, WorkoutAdapter.WorkoutAdapterListener {
 
     private WorkoutViewModel workoutViewModel = new WorkoutViewModel();
     private PlansViewModel plansViewModel = new PlansViewModel();
@@ -103,7 +103,7 @@ public class WorkoutFragment extends Fragment implements PlansAdapter.PlansAdapt
 
         PlansAdapter adapter = new PlansAdapter(plans, getContext(), plansViewModel, PlansAdapter.PlanListType.SELECT);
 
-        adapter.setListener(this);  // Make this fragment listen for selecting a plan
+        adapter.setSelectPlanListener(this);  // Make this fragment listen for selecting a plan
 
         rvSelectPlan.setAdapter(adapter);
         rvSelectPlan.setLayoutManager(new LinearLayoutManager(getActivity()));

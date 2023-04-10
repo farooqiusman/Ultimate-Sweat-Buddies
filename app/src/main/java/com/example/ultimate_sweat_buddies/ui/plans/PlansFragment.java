@@ -1,5 +1,6 @@
 package com.example.ultimate_sweat_buddies.ui.plans;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.ultimate_sweat_buddies.R;
 
+import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,10 +25,12 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class PlansFragment extends Fragment {
+public class PlansFragment extends Fragment implements PlansAdapter.PlansAdapterEditListener {
 
     private final PlansViewModel mViewModel = new PlansViewModel();
     private static PlansFragment instance;
+
+    private PlansAdapter adapter;
 
     public static PlansFragment getInstance() {
         if (instance == null) instance = new PlansFragment();
@@ -51,7 +55,8 @@ public class PlansFragment extends Fragment {
             e.printStackTrace();
         }
 
-        PlansAdapter adapter = new PlansAdapter(data, getContext(), mViewModel, PlansAdapter.PlanListType.EDIT_DELETE);
+        adapter = new PlansAdapter(data, getContext(), mViewModel, PlansAdapter.PlanListType.EDIT_DELETE);
+        adapter.setEditPlanListener(this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -70,5 +75,25 @@ public class PlansFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onEditPlanClicked(WorkoutPlan plan) {
+        Intent editPlanIntent = new Intent(getContext(), AddEditPlanActivity.class);
+        editPlanIntent.putExtra("update_type", "edit");
+        editPlanIntent.putExtra("title", plan.getTitle());
+        editPlanIntent.putExtra("days_of_week", plan.getDaysOfWeek());
+        editPlanIntent.putExtra("creation_date", plan.getCreationDate());
+
+        // Get the exercise IDs for this workout plan as an array and pass it as well
+        try {
+            List<Exercise> planExercises = mViewModel.getWorkoutPlanExercises(
+                    StoreLoginUser.user.getUserEmail(), plan.getTitle()).get();
+            int[] exerciseIds = planExercises.stream().mapToInt(Exercise::getId).toArray();
+            editPlanIntent.putExtra("exercise_ids", exerciseIds);
+            startActivity(editPlanIntent);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
+import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
+import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
 import com.example.ultimate_sweat_buddies.databinding.ActivityAddEditPlanBinding;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesAdapter;
 import com.example.ultimate_sweat_buddies.ui.exercises.ExercisesViewModel;
@@ -46,9 +48,16 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         }
 
         List<Exercise> addedExercises = new ArrayList<>();
+        String userEmail = StoreLoginUser.user.getUserEmail();
+        String existingTitle = getIntent().getStringExtra("title");
+        String creationDate = getIntent().getStringExtra("creation_date");
+
         if (editingPlan) {
+            String daysOfWeek = getIntent().getStringExtra("days_of_week");
+
+            // Get the exercises for this plan and remove them from the unadded exercises list
             try {
-                addedExercises = plansViewModel.getWorkoutPlanExercises("test@test.com", "Push").get();   // Waits for the future to return its result
+                addedExercises = plansViewModel.getWorkoutPlanExercises(userEmail, existingTitle).get();   // Waits for the future to return its result
 
                 // Remove the added exercises from unaddedExercises, since it has all of the exercises initially
                 if (addedExercises.size() > 0) {
@@ -56,6 +65,7 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
                         for (Exercise e : addedExercises) {
                             if (unaddedExercises.get(i).getId() == e.getId()) {
                                 unaddedExercises.remove(i);
+                                break;
                             }
                         }
                     }
@@ -64,6 +74,10 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
                 Log.d("error_getting_workout_plan_exercises", "could not get exercises");
                 e.printStackTrace();
             }
+
+            // Set the title and days of week
+            binding.etTitle.setText(existingTitle);
+            checkDaysOfWeekBoxes(binding, daysOfWeek);
         }
 
         RecyclerView rvAddedExercises = binding.rvAddedExercises;
@@ -89,7 +103,12 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
 
             if (plansViewModel.validateInput(title, daysOfWeek)) {
                 try {
-                    plansViewModel.postPlan("test@test.com", title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
+                    if (editingPlan) {
+                        WorkoutPlan updatedPlan = new WorkoutPlan(userEmail, title, daysOfWeek, creationDate);
+                        plansViewModel.updatePlan(userEmail, existingTitle, updatedPlan, addedExercisesAdapter.getExercises()).get();
+                    } else {
+                        plansViewModel.postPlan(userEmail, title, daysOfWeek, addedExercisesAdapter.getExercises()).get();
+                    }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -113,6 +132,16 @@ public class AddEditPlanActivity extends AppCompatActivity implements ExercisesA
         if (binding.cbSaturday.isChecked()) daysOfWeek += "Sa, ";
         if (daysOfWeek.isEmpty()) return "";
         return daysOfWeek.substring(0, daysOfWeek.length() - 2);
+    }
+
+    private void checkDaysOfWeekBoxes(ActivityAddEditPlanBinding binding, String daysOfWeek) {
+        binding.cbSunday.setChecked(daysOfWeek.contains("Su"));
+        binding.cbMonday.setChecked(daysOfWeek.contains("M"));
+        binding.cbTuesday.setChecked(daysOfWeek.contains("Tu"));
+        binding.cbWednesday.setChecked(daysOfWeek.contains("W"));
+        binding.cbThursday.setChecked(daysOfWeek.contains("Th"));
+        binding.cbFriday.setChecked(daysOfWeek.contains("F"));
+        binding.cbSaturday.setChecked(daysOfWeek.contains("Sa"));
     }
 
     @Override
