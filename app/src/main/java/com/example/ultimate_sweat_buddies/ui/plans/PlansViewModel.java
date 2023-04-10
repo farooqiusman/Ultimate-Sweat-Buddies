@@ -91,6 +91,67 @@ public class PlansViewModel extends ViewModel {
         return future;
     }
 
+    public CompletableFuture<Boolean> updatePlan(
+            String userEmail, String existingTitle, WorkoutPlan updatedPlan, List<Exercise> workoutPlanExercises
+    ) {
+        Call<WorkoutPlan> call = apiInterface.putWorkoutPlan(userEmail, existingTitle, updatedPlan);
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        CompletableFuture.runAsync(() -> {
+            try {
+                boolean allSucceeded = true;
+                Response<WorkoutPlan> response = call.execute();
+                // If the workout plan is created, create all of the workout plan exercise records
+                if (response.isSuccessful()) {
+                    // First remove all exercises from the plan
+                    boolean success = deleteWorkoutPlanExercises(userEmail, updatedPlan.getTitle()).get();
+                    if (!success) {
+                        Log.e("delete_workout_plan_exercises_error",
+                                "Could not delete workout plan exercises for plan: " + updatedPlan.getTitle());
+                        future.complete(false);
+                        return;
+                    }
+
+                    // Then add the exercises to the plan
+                    for (Exercise ex : workoutPlanExercises) {
+                        String exerciseType = ex instanceof WeightExercise ? "weight" : "endurance";
+                        success = postPlanExercise(exerciseType, userEmail, updatedPlan.getTitle(), ex.getId()).get();
+                        if (!success) {
+                            allSucceeded = false;
+                            Log.e("post_workout_plan_exercise_error",
+                                    "Could not create workout plan exercise for plan: " + updatedPlan.getTitle());
+                        }
+                    }
+                } else {
+                    allSucceeded = false;
+                }
+                future.complete(allSucceeded);
+            } catch (IOException | ExecutionException | InterruptedException e) {
+                Log.e("delete_plan", e.getMessage());
+                future.complete(false);
+            }
+        });
+
+        return future;
+    }
+
+    public CompletableFuture<Boolean> deleteWorkoutPlanExercises(String userEmail, String workoutPlanTitle) {
+        Call<Void> call = apiInterface.deleteWorkoutPlanExercises(userEmail, workoutPlanTitle);
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        CompletableFuture.runAsync(() -> {
+            try {
+                Response<Void> response = call.execute();
+                future.complete(response.isSuccessful());
+            } catch (IOException e) {
+                Log.e("delete_plan_exercises", e.getMessage());
+                future.complete(false);
+            }
+        });
+
+        return future;
+    }
+
     public CompletableFuture<Boolean> postPlanExercise(String exerciseType, String userEmail, String workoutPlanTitle, int exerciseId) {
         PostWorkoutPlanExercise payload = new PostWorkoutPlanExercise(exerciseType, userEmail, workoutPlanTitle, exerciseId);
         Call<PostWorkoutPlanExercise> call = apiInterface.postWorkoutPlanExercise(payload);

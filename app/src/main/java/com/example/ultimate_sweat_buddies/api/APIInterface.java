@@ -21,6 +21,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -66,6 +67,9 @@ public interface APIInterface {
     @POST("/plans")
     Call<PostWorkoutPlan> postWorkoutPlan(@Body PostWorkoutPlan plan);
 
+    @PUT("/plans/{user_email}/{title}")
+    Call<WorkoutPlan> putWorkoutPlan(@Path("user_email") String email, @Path("title") String title, @Body WorkoutPlan plan);
+
     @DELETE("/plans/{user_email}/{title}")
     Call<Void> deleteWorkoutPlan(@Path("user_email") String userEmail, @Path("title") String title);
 
@@ -75,6 +79,9 @@ public interface APIInterface {
 
     @POST("/workout-plan-exercises")
     Call<PostWorkoutPlanExercise> postWorkoutPlanExercise(@Body PostWorkoutPlanExercise body);
+
+    @DELETE("/workout-plan-exercises/{user_email}/{title}")
+    Call<Void> deleteWorkoutPlanExercises(@Path("user_email") String email, @Path("title") String title);
 
     @GET("/check_auth/{user_email}/{password}")
     Call<GetStatus> checkUsrAuth(@Path("user_email") String email, @Path("password") String password);
