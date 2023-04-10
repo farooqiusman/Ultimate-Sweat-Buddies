@@ -25,6 +25,9 @@ public class ExercisesFragment extends Fragment {
     private final ExercisesViewModel mViewModel = new ExercisesViewModel();
     private static ExercisesFragment instance;
 
+    private ExercisesAdapter adapter;
+    private RecyclerView recyclerView;
+
     public static ExercisesFragment getInstance() {
         if (instance == null) instance = new ExercisesFragment();
         return instance;
@@ -36,19 +39,9 @@ public class ExercisesFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_exercises, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.Recycler_view);
+        recyclerView = view.findViewById(R.id.Recycler_view);
 
-        List<Exercise> data = null;
-        try {
-            data = mViewModel.getExercises(email).get();  // Waits for the future to return its result
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ExercisesAdapter adapter = new ExercisesAdapter(data, getContext(), ExercisesAdapter.ExerciseListType.EDIT_DELETE);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        setupExercisesAdapter();
 
         FloatingActionButton fab = view.findViewById(R.id.add_btn);
         Intent intent = new Intent(getActivity(), AddExercisesActivity.class);
@@ -62,8 +55,28 @@ public class ExercisesFragment extends Fragment {
         return view;
     }
 
+    public void setupExercisesAdapter() {
+        List<Exercise> data = null;
+        try {
+            data = mViewModel.getExercises(email).get();  // Waits for the future to return its result
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        adapter = new ExercisesAdapter(data, getContext(), ExercisesAdapter.ExerciseListType.EDIT_DELETE);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupExercisesAdapter();    // Refresh the exercises list
     }
 }

@@ -31,6 +31,7 @@ public class PlansFragment extends Fragment implements PlansAdapter.PlansAdapter
     private static PlansFragment instance;
 
     private PlansAdapter adapter;
+    private RecyclerView recyclerView;
 
     public static PlansFragment getInstance() {
         if (instance == null) instance = new PlansFragment();
@@ -43,23 +44,9 @@ public class PlansFragment extends Fragment implements PlansAdapter.PlansAdapter
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_plans, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.Recycler_view);
+        recyclerView = view.findViewById(R.id.Recycler_view);
 
-        List<WorkoutPlan> data = null;
-        try {
-
-            data = mViewModel.getPlans(StoreLoginUser.user.getUserEmail()).get();  // Waits for the future to return its result
-
-        } catch (ExecutionException | InterruptedException e) {
-            Log.d("error_getting_plans", "could not get plans");
-            e.printStackTrace();
-        }
-
-        adapter = new PlansAdapter(data, getContext(), mViewModel, PlansAdapter.PlanListType.EDIT_DELETE);
-        adapter.setEditPlanListener(this);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        setupPlansAdapter();
 
         FloatingActionButton fab = view.findViewById(R.id.add_btn);
 
@@ -75,6 +62,28 @@ public class PlansFragment extends Fragment implements PlansAdapter.PlansAdapter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupPlansAdapter();    // Refresh the plans list
+    }
+
+    private void setupPlansAdapter() {
+        List<WorkoutPlan> data = null;
+        try {
+            data = mViewModel.getPlans(StoreLoginUser.user.getUserEmail()).get();  // Waits for the future to return its result
+        } catch (ExecutionException | InterruptedException e) {
+            Log.d("error_getting_plans", "could not get plans");
+            e.printStackTrace();
+        }
+
+        adapter = new PlansAdapter(data, getContext(), mViewModel, PlansAdapter.PlanListType.EDIT_DELETE);
+        adapter.setEditPlanListener(this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
