@@ -34,7 +34,7 @@
             android:name=".ui.login.Signin"
             android:exported="false" />
         <activity
-            android:name=".ui.exercises.AddExercisesActivity"
+            android:name=".ui.exercises.AddEditExercisesActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

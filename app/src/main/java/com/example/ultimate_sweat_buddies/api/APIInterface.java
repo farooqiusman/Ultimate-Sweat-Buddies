@@ -8,6 +8,8 @@ import com.example.ultimate_sweat_buddies.api.apiclasses.PostWorkoutPlanExercise
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
 
+import com.example.ultimate_sweat_buddies.api.apiclasses.PutEnduranceExercise;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PutWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
@@ -54,6 +56,11 @@ public interface APIInterface {
     @POST("/exercises")
     Call<PostEnduranceExercise> postEnduranceExercise(@Body PostEnduranceExercise postEnduranceExercise);
 
+    @PUT("/exercises/{id}/{exercise_type}")
+    Call<PutWeightExercise> putWeightExercise(@Path("id") int id, @Path("exercise_type") String exerciseType, @Body PutWeightExercise putWeightExercise);
+
+    @PUT("/exercises/{id}/{exercise_type}")
+    Call<PutEnduranceExercise> putEnduranceExercise(@Path("id") int id, @Path("exercise_type") String exerciseType, @Body PutEnduranceExercise putEnduranceExercise);
 
     @DELETE("/exercises/{exercise_type}/{id}")
     Call<Void> deleteExercise(@Path("id") Integer id, @Path("exercise_type") String exerciseType);

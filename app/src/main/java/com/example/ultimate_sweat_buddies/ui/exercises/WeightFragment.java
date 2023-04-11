@@ -19,7 +19,10 @@ import android.widget.Toast;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PutWeightExercise;
+import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
+import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
 
 import java.util.concurrent.ExecutionException;
 
@@ -33,11 +36,12 @@ public class WeightFragment extends Fragment {
 
     private String email = StoreLoginUser.user.getUserEmail();
 
-
+    private String type;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Bundle bundle = getArguments();
         View view = inflater.inflate(R.layout.fragment_weight, container, false);
 
         eVm = new ViewModelProvider(this).get(ExercisesViewModel.class);
@@ -52,19 +56,37 @@ public class WeightFragment extends Fragment {
         }
 
 
+
+        if (bundle != null) {
+            // If bundle is not null, it means we are editing an existing exercise
+            exerciseName.setText(bundle.getString("name"));
+            sets.setText(String.valueOf(bundle.getInt("sets")));
+            reps.setText(String.valueOf(bundle.getInt("reps")));
+            weight.setText(String.valueOf(bundle.getInt("weight")));
+            type = bundle.getString("update_type");
+
+        }
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PostWeightExercise pw;
-                String getName = exerciseName.getText().toString();
-                int getSets = Integer.parseInt(sets.getText().toString());
-                int getReps = Integer.parseInt(reps.getText().toString());
-                int getWeight = Integer.parseInt(weight.getText().toString());
-
-                //error checking
-                // error checking
-
-
+            PostWeightExercise pw;
+            String getName = exerciseName.getText().toString();
+            int getSets = Integer.parseInt(sets.getText().toString());
+            int getReps = Integer.parseInt(reps.getText().toString());
+            int getWeight = Integer.parseInt(weight.getText().toString());
+            if(type.equals("edit")) {
+                int id = bundle.getInt("id");
+                PutWeightExercise ex = new PutWeightExercise(id ,getName,email, getSets, getReps, getWeight);
+                //log the id and email
+                Log.e("WeightFragment", "id: " + id + " email: " + email);
+                try {
+                    eVm.putWeightExercise(ex).get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else {
 
                 pw = new PostWeightExercise("weight", getName, email, getSets, getReps, getWeight);
                 try {
@@ -72,9 +94,10 @@ public class WeightFragment extends Fragment {
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-                getActivity().finish();
             }
-        });
+            getActivity().finish();
+        }
+    });
 
         return view;
     }

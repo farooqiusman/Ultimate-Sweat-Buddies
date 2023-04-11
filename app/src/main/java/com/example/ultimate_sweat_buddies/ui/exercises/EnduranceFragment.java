@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.ultimate_sweat_buddies.MainActivity;
 import com.example.ultimate_sweat_buddies.R;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PutEnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.StoreLoginUser;
 
 import java.util.concurrent.ExecutionException;
@@ -29,6 +30,7 @@ public class EnduranceFragment extends Fragment {
     private Button btn;
 
     private String email = StoreLoginUser.user.getUserEmail();
+    private String type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,11 +44,18 @@ public class EnduranceFragment extends Fragment {
         secs = view.findViewById(R.id.etSecs);
         btn = view.findViewById(R.id.btn_submit);
         Intent intent = new Intent(getContext(), MainActivity.class);
+        Bundle bundle = getArguments();
+
+
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PostEnduranceExercise pe;
+
+                int id = bundle.getInt("id");
+
 
                 String getName = exerciseName.getText().toString();
                 int getHours = Integer.parseInt(hours.getText().toString());
@@ -100,18 +109,39 @@ public class EnduranceFragment extends Fragment {
                     return;
                 }
 
+                if(bundle != null){
+                    //set the values to the fields
+                    exerciseName.setText(bundle.getString("name"));
+                    hours.setText(String.valueOf(bundle.getInt("hours")));
+                    mins.setText(String.valueOf(bundle.getInt("minutes")));
+                    secs.setText(String.valueOf(bundle.getInt("seconds")));
+                    type = getArguments().getString("update_type");
+                }
+
 
 
                 String time = "";
                 time = time + getHours + ":" + getMins + ":" + getSecs;
 
-                pe = new PostEnduranceExercise("endurance" , getName, email , time);
 
-                try {
-                    eVm.postEnduranceExercises(pe).get();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
+                if(type.equals("edit")){
+                    PutEnduranceExercise pee = new PutEnduranceExercise(id, getName, email, time);
+                    try {
+                        eVm.putEnduranceExercise(pee).get();
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    getActivity().finish();
+                    return;
+                }else {
+                    pe = new PostEnduranceExercise("endurance", getName, email, time);
+                    try {
+                        eVm.postEnduranceExercises(pe).get();
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+
                 getActivity().finish();
             }
         });

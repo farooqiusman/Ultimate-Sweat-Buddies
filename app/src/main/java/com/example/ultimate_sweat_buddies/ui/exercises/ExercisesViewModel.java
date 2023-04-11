@@ -8,14 +8,18 @@ import com.example.ultimate_sweat_buddies.api.APIInterface;
 import com.example.ultimate_sweat_buddies.api.RetrofitInstance;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostEnduranceExercise;
 import com.example.ultimate_sweat_buddies.api.apiclasses.PostWeightExercise;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PutEnduranceExercise;
+import com.example.ultimate_sweat_buddies.api.apiclasses.PutWeightExercise;
 import com.example.ultimate_sweat_buddies.data.model.EnduranceExercise;
 import com.example.ultimate_sweat_buddies.data.model.Exercise;
 import com.example.ultimate_sweat_buddies.data.model.WeightExercise;
+import com.example.ultimate_sweat_buddies.data.model.WorkoutPlan;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,31 +120,45 @@ public class ExercisesViewModel extends ViewModel {
         return future;
     }
 
-    //delete exercises
-//    public CompletableFuture<Void> deleteExercise(Integer exerciseId) {
-//        CompletableFuture<Void> future = new CompletableFuture<>();
-//
-//        apiInterface.deleteExercise(exerciseId).enqueue(new retrofit2.Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                if (response.isSuccessful()) {
-//                    System.out.println("Exercise deleted successfully");
-//                    future.complete(null);
-//                } else {
-//                    System.err.println("Failed to delete exercise");
-//                    future.completeExceptionally(new RuntimeException("Failed to delete exercise"));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                System.err.println("Failed to delete exercise: " + t.getMessage());
-//                future.completeExceptionally(t);
-//            }
-//        });
-//
-//        return future;
-//    }
+    public CompletableFuture<Boolean> putWeightExercise(PutWeightExercise ex){
+        String exerciseType = "weight";
+
+        Call<PutWeightExercise> call = apiInterface.putWeightExercise(ex.getId(), exerciseType, ex);
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        CompletableFuture.runAsync(() -> {
+            try {
+                Response<PutWeightExercise> response = call.execute();
+
+                future.complete(response.isSuccessful());
+            } catch (IOException e) {
+                Log.e("putting_exercises", e.getMessage());
+                future.complete(false);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Boolean> putEnduranceExercise(PutEnduranceExercise ex){
+        String exerciseType = "endurance";
+
+        Call<PutEnduranceExercise> call = apiInterface.putEnduranceExercise(ex.getId(), exerciseType, ex);
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        CompletableFuture.runAsync(() -> {
+            try {
+                Response<PutEnduranceExercise> response = call.execute();
+
+                future.complete(response.isSuccessful());
+            } catch (IOException e) {
+                Log.e("putting_exercises", e.getMessage());
+                future.complete(false);
+            }
+        });
+        return future;
+    }
+
+
 
 //    String type = "weight";
     public CompletableFuture<Boolean> deleteExercise(Integer id, String type){
