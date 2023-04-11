@@ -26,9 +26,15 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         void onExerciseRemoved(Exercise ex, ExerciseListType type);
     }
 
+    public interface ExercisesAdapterEditListener{
+        void onEditExercise(Exercise ex);
+    }
+
+
 
 
     private ExercisesAdapterListener listener;
+    private ExercisesAdapterEditListener editListener;
 
     List<Exercise> exercises;
 
@@ -54,6 +60,9 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
 
     public void setListener(ExercisesAdapterListener listener) {
         this.listener = listener;
+    }
+    public void setEditListener(ExercisesAdapterEditListener editListener) {
+        this.editListener = editListener;
     }
 
     @NonNull
@@ -92,6 +101,15 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         switch (type) {
             case EDIT_DELETE:
                 // edit and delete button listeners
+                holder.ibButton1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int pos = holder.getAdapterPosition();
+
+                        editListener.onEditExercise(exercises.get(pos));
+
+                    }
+                });
                 holder.ibButton2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -116,6 +134,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
                         }
                     }
                 });
+
                 break;
 
             case ADD:
